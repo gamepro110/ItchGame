@@ -22,10 +22,6 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private bool m_isGrounded = false;
     [SerializeField] private float m_groundedRayLength = 1.0f;
 
-#if UNITY_EDITOR
-    public TMP_Text txt;
-#endif
-
     private void Start()
     {
         m_RB = GetComponent<Rigidbody2D>();
@@ -46,15 +42,6 @@ public class PlayerJump : MonoBehaviour
             m_jumpState = JumpState.doubleJumped;
         }
     }
-
-#if UNITY_EDITOR
-
-    private void LateUpdate()
-    {
-        txt.text = string.Format("isGrounded: {0}\nJumpState: {1}", m_isGrounded, m_jumpState);
-    }
-
-#endif
 
     private void PlayerJumpAction(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
