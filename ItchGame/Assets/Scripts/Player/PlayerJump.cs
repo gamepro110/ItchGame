@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using TMPro;
 
 public class PlayerJump : MonoBehaviour
@@ -21,6 +22,7 @@ public class PlayerJump : MonoBehaviour
     [SerializeField, Range(0.1f, 0.99f)] private float m_jumpForceMultiplier = 1f;
     [SerializeField] private bool m_isGrounded = false;
     [SerializeField] private float m_groundedRayLength = 1.0f;
+    private bool tempboolthing;
 
 #if UNITY_EDITOR
     public TMP_Text txt;
@@ -35,15 +37,26 @@ public class PlayerJump : MonoBehaviour
 
     private void Update()
     {
+        //if (tempboolthing)
+        //{
         m_isGrounded = GroundCheck;
+        //}
 
-        if (m_isGrounded)
+        //if (m_isGrounded)
+        //{
+        //    m_jumpState = JumpState.grounded;
+        //}
+        //else if (!m_isGrounded && m_jumpState == JumpState.jumped)
+        //{
+        //    m_jumpState = JumpState.doubleJumped;
+        //}
+
+        if (m_RB.velocity.y == 0)
         {
-            m_jumpState = JumpState.grounded;
-        }
-        else if (!m_isGrounded && m_jumpState == JumpState.jumped)
-        {
-            m_jumpState = JumpState.doubleJumped;
+            if (GroundCheck)
+            {
+                m_jumpState = JumpState.grounded;
+            }
         }
     }
 
@@ -58,6 +71,7 @@ public class PlayerJump : MonoBehaviour
 
     private void PlayerJumpAction(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        tempboolthing = false;
         Vector2 vel = Vector2.zero;
 
         switch (m_jumpState)
@@ -69,20 +83,38 @@ public class PlayerJump : MonoBehaviour
                 }
             case JumpState.jumped:
                 {
+                    m_RB.velocity = new Vector2(m_RB.velocity.x, m_RB.velocity.y < 0 ? 0 : m_RB.velocity.y);
                     vel = Vector2.up * m_jumpForce * (m_jumpForceMultiplier);
                     break;
                 }
         }
         m_RB.velocity += vel;
-        m_jumpState++;
+
+        switch (m_jumpState)
+        {
+            case JumpState.grounded:
+                {
+                    m_jumpState = JumpState.jumped;
+                }
+                break;
+            case JumpState.jumped:
+                {
+                    m_jumpState = JumpState.doubleJumped;
+                }
+                break;
+            case JumpState.doubleJumped:
+                break;
+        }
     }
 
     private bool GroundCheck
     {
         get
         {
+
             m_hit = Physics2D.Raycast(transform.position, Vector2.down, m_groundedRayLength, m_layers);
             return m_hit.transform != null;
+
         }
     }
 
