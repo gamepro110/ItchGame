@@ -22,7 +22,6 @@ public class PlayerJump : MonoBehaviour
     [SerializeField, Range(0.1f, 0.99f)] private float m_jumpForceMultiplier = 1f;
     [SerializeField] private bool m_isGrounded = false;
     [SerializeField] private float m_groundedRayLength = 1.0f;
-    private bool tempboolthing;
 
     private void Start()
     {
@@ -58,7 +57,6 @@ public class PlayerJump : MonoBehaviour
 
     private void PlayerJumpAction(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        tempboolthing = false;
         Vector2 vel = Vector2.zero;
 
         switch (m_jumpState)
