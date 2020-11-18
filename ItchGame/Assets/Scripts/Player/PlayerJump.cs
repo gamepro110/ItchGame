@@ -29,7 +29,6 @@ public class PlayerJump : MonoBehaviour
         m_input = FindObjectOfType<InputManager>();
         m_input.jump = PlayerJumpAction;
     }
-
     private void Update()
     {
         //if (tempboolthing)

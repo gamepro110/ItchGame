@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public enum Direction
 {
@@ -8,7 +9,7 @@ public enum Direction
     Right = 1,
 }
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float m_bulletSpeed;
     private IHitable m_hitable = null;
