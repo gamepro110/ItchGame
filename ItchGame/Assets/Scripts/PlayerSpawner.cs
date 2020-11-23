@@ -9,18 +9,13 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
-            GameObject go = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
-            if (photonView.IsMine)
-            {
-                go.AddComponent<Rigidbody2D>().freezeRotation = true;
-            }
+            PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
         }
         else
         {
             Instantiate(Resources.Load<GameObject>("PlayerPrefab"), Vector3.zero, Quaternion.identity);
             Debug.LogError("You are offline");
         }
-
 
         Destroy(gameObject);
     }
