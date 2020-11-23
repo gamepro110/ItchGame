@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
 using Photon.Pun;
 
+internal enum JumpState
+{
+    grounded = 0,
+    jumped,
+    doubleJumped,
+}
+
 public class PlayerJump : MonoBehaviourPunCallbacks
 {
-    private enum JumpState
-    {
-        grounded = 0,
-        jumped,
-        doubleJumped,
-    }
-
     private InputManager m_input = null;
-    private Rigidbody2D m_RB = null;
 
     private RaycastHit2D m_hit = default;
 
@@ -22,27 +21,26 @@ public class PlayerJump : MonoBehaviourPunCallbacks
     [SerializeField] private bool m_isGrounded = false;
     [SerializeField] private float m_groundedRayLength = 1.0f;
 
+    internal JumpState GetJumpState { get => m_jumpState; }
+
     private void Start()
     {
-        m_RB = GetComponent<Rigidbody2D>();
         m_input = FindObjectOfType<InputManager>();
         if (photonView.IsMine)
         {
             m_input.jump = PlayerJumpAction;
         }
     }
+
     private void Update()
     {
         if (photonView.IsMine)
         {
             m_isGrounded = GroundCheck;
 
-            if (m_RB.velocity.y == 0)
+            if (GroundCheck)
             {
-                if (GroundCheck)
-                {
-                    m_jumpState = JumpState.grounded;
-                }
+                m_jumpState = JumpState.grounded;
             }
         }
     }
@@ -60,12 +58,13 @@ public class PlayerJump : MonoBehaviourPunCallbacks
                 }
             case JumpState.jumped:
                 {
-                    m_RB.velocity = new Vector2(m_RB.velocity.x, m_RB.velocity.y < 0 ? 0 : m_RB.velocity.y);
                     vel = Vector2.up * m_jumpForce * (m_jumpForceMultiplier);
                     break;
                 }
         }
-        m_RB.velocity += vel;
+
+        //TODO calculate jump
+        Debug.Log("CALCULATE JUMP", this);
 
         switch (m_jumpState)
         {
@@ -74,11 +73,13 @@ public class PlayerJump : MonoBehaviourPunCallbacks
                     m_jumpState = JumpState.jumped;
                 }
                 break;
+
             case JumpState.jumped:
                 {
                     m_jumpState = JumpState.doubleJumped;
                 }
                 break;
+
             case JumpState.doubleJumped:
                 break;
         }
