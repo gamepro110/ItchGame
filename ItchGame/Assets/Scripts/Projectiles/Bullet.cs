@@ -33,6 +33,7 @@ public class Bullet : MonoBehaviourPunCallbacks
         {
             m_hitable.Hit(m_dmg);
         }
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        transform.position += new Vector3(1, 0, 0);
     }
 }
