@@ -17,7 +17,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             Debug.LogError("You are offline");
         }
 
-
         Destroy(gameObject);
     }
 }
