@@ -8,6 +8,11 @@ public class PlayerDamagable : MonoBehaviour, IHitable
 
     public TMP_Text txt;
 
+    private void Start()
+    {
+        txt = FindObjectOfType<TMP_Text>();
+    }
+
     void LateUpdate()
     {
         txt.text = string.Format("{0}%", m_damage);

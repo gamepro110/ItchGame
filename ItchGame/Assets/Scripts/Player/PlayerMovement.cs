@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPunCallbacks
 {
     private InputManager m_input = null;
     private Rigidbody2D m_RB = null;
@@ -17,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        m_RB.transform.position += (Vector3)m_input.LeftStick * m_movementSpeed * Time.deltaTime;
+        if (photonView.IsMine)
+        {
+            m_RB.transform.position += (Vector3)m_input.LeftStick * m_movementSpeed * Time.deltaTime;
+        }
     }
 }
