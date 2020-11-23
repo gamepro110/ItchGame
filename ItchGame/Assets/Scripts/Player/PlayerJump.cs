@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
-using TMPro;
+using Photon.Pun;
 
-public class PlayerJump : MonoBehaviour
+public class PlayerJump : MonoBehaviourPunCallbacks
 {
     private enum JumpState
     {
@@ -27,23 +26,14 @@ public class PlayerJump : MonoBehaviour
     {
         m_RB = GetComponent<Rigidbody2D>();
         m_input = FindObjectOfType<InputManager>();
-        m_input.jump = PlayerJumpAction;
+        if (photonView.IsMine)
+        {
+            m_input.jump = PlayerJumpAction;
+        }
     }
     private void Update()
     {
-        //if (tempboolthing)
-        //{
         m_isGrounded = GroundCheck;
-        //}
-
-        //if (m_isGrounded)
-        //{
-        //    m_jumpState = JumpState.grounded;
-        //}
-        //else if (!m_isGrounded && m_jumpState == JumpState.jumped)
-        //{
-        //    m_jumpState = JumpState.doubleJumped;
-        //}
 
         if (m_RB.velocity.y == 0)
         {
@@ -95,10 +85,8 @@ public class PlayerJump : MonoBehaviour
     {
         get
         {
-
             m_hit = Physics2D.Raycast(transform.position, Vector2.down, m_groundedRayLength, m_layers);
             return m_hit.transform != null;
-
         }
     }
 
