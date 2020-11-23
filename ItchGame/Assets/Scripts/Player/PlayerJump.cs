@@ -33,13 +33,16 @@ public class PlayerJump : MonoBehaviourPunCallbacks
     }
     private void Update()
     {
-        m_isGrounded = GroundCheck;
-
-        if (m_RB.velocity.y == 0)
+        if (photonView.IsMine)
         {
-            if (GroundCheck)
+            m_isGrounded = GroundCheck;
+
+            if (m_RB.velocity.y == 0)
             {
-                m_jumpState = JumpState.grounded;
+                if (GroundCheck)
+                {
+                    m_jumpState = JumpState.grounded;
+                }
             }
         }
     }
