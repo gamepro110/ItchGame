@@ -14,6 +14,11 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     {
         m_RB = GetComponent<Rigidbody2D>();
         m_input = FindObjectOfType<InputManager>();
+
+        if (!photonView.IsMine)
+        {
+            m_RB.simulated = false;
+        }
     }
 
     private void Update()
