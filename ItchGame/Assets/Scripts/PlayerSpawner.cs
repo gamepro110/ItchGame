@@ -13,8 +13,8 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         }
         else
         {
-            Instantiate(Resources.Load<GameObject>("PlayerPrefab"), Vector3.zero, Quaternion.identity);
-            Debug.LogError("You are offline");
+            Instantiate(Resources.Load<GameObject>("Player"), Vector3.zero, Quaternion.identity);
+            Debug.LogWarning("You are offline");
         }
 
         Destroy(gameObject);

@@ -6,6 +6,7 @@ internal enum JumpState
     grounded = 0,
     jumped,
     doubleJumped,
+    falling,
 }
 
 public class PlayerJump : MonoBehaviourPunCallbacks
@@ -42,6 +43,28 @@ public class PlayerJump : MonoBehaviourPunCallbacks
             {
                 m_jumpState = JumpState.grounded;
             }
+            else
+            {
+                m_jumpState = JumpState.falling;
+            }
+        }
+
+        //TODO calculate gravity
+        Debug.Log("Calculate Gravity");
+
+        switch (m_jumpState)
+        {
+            case JumpState.grounded:
+                break;
+            case JumpState.jumped:
+                transform.position += new Vector3(0, -0.1f, 0) * Time.deltaTime;
+                break;
+            case JumpState.doubleJumped:
+                transform.position += new Vector3(0, -0.1f, 0) * Time.deltaTime;
+                break;
+            case JumpState.falling:
+                transform.position += new Vector3(0, -0.1f, 0) * Time.deltaTime;
+                break;
         }
     }
 
@@ -73,14 +96,17 @@ public class PlayerJump : MonoBehaviourPunCallbacks
                     m_jumpState = JumpState.jumped;
                 }
                 break;
-
             case JumpState.jumped:
                 {
                     m_jumpState = JumpState.doubleJumped;
                 }
                 break;
-
             case JumpState.doubleJumped:
+                break;
+            case JumpState.falling:
+                {
+                    m_jumpState = JumpState.jumped;
+                }
                 break;
         }
     }

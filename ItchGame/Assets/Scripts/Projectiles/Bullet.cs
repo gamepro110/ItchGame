@@ -24,6 +24,8 @@ public class Bullet : MonoBehaviourPunCallbacks
     void Update()
     {
         transform.position += (new Vector3((int)m_currentDir, 0, 0) * m_bulletSpeed) * Time.deltaTime;
+
+        //TODO check if collider is overlapping other collider /or/ check if raycircle is touching
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
