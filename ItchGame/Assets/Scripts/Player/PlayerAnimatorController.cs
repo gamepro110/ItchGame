@@ -20,7 +20,14 @@ public class PlayerAnimatorController : MonoBehaviour
 
     private void UpdateAnimatorState()
     {
-        m_anim.SetInteger("state", (int)m_movement.PlayerState);
-        m_anim.SetInteger("dir", (int)m_movement.PlayerDir);
+        if (m_anim.GetInteger("state") != (int)m_movement.PlayerState)
+        {
+            m_anim.SetInteger("state", (int)m_movement.PlayerState);
+        }
+
+        if (m_anim.GetFloat("dir") != (float)m_movement.PlayerDir)
+        {
+            m_anim.SetFloat("dir", (float)m_movement.PlayerDir);
+        }
     }
 }
