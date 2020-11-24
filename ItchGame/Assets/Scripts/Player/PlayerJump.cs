@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
-using TMPro;
+using Photon.Pun;
 
-public class PlayerJump : MonoBehaviour
+internal enum JumpState
 {
-    private enum JumpState
-    {
-        grounded = 0,
-        jumped,
-        doubleJumped,
-    }
+    grounded = 0,
+    jumped,
+    doubleJumped,
+}
 
+public class PlayerJump : MonoBehaviourPunCallbacks
+{
     private InputManager m_input = null;
-    private Rigidbody2D m_RB = null;
 
     private RaycastHit2D m_hit = default;
 
@@ -22,39 +21,29 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private bool m_isGrounded = false;
     [SerializeField] private float m_groundedRayLength = 1.0f;
 
-#if UNITY_EDITOR
-    public TMP_Text txt;
-#endif
+    internal JumpState GetJumpState { get => m_jumpState; }
 
     private void Start()
     {
-        m_RB = GetComponent<Rigidbody2D>();
         m_input = FindObjectOfType<InputManager>();
-        m_input.jump = PlayerJumpAction;
+        if (photonView.IsMine)
+        {
+            m_input.jump = PlayerJumpAction;
+        }
     }
 
     private void Update()
     {
-        m_isGrounded = GroundCheck;
+        if (photonView.IsMine)
+        {
+            m_isGrounded = GroundCheck;
 
-        if (m_isGrounded)
-        {
-            m_jumpState = JumpState.grounded;
-        }
-        else if (!m_isGrounded && m_jumpState == JumpState.jumped)
-        {
-            m_jumpState = JumpState.doubleJumped;
+            if (GroundCheck)
+            {
+                m_jumpState = JumpState.grounded;
+            }
         }
     }
-
-#if UNITY_EDITOR
-
-    private void LateUpdate()
-    {
-        txt.text = string.Format("isGrounded: {0}\nJumpState: {1}", m_isGrounded, m_jumpState);
-    }
-
-#endif
 
     private void PlayerJumpAction(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
@@ -73,8 +62,27 @@ public class PlayerJump : MonoBehaviour
                     break;
                 }
         }
-        m_RB.velocity += vel;
-        m_jumpState++;
+
+        //TODO calculate jump
+        Debug.Log("CALCULATE JUMP", this);
+
+        switch (m_jumpState)
+        {
+            case JumpState.grounded:
+                {
+                    m_jumpState = JumpState.jumped;
+                }
+                break;
+
+            case JumpState.jumped:
+                {
+                    m_jumpState = JumpState.doubleJumped;
+                }
+                break;
+
+            case JumpState.doubleJumped:
+                break;
+        }
     }
 
     private bool GroundCheck
