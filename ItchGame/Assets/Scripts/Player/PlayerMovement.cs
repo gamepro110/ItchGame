@@ -35,7 +35,23 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         if (photonView.IsMine)
         {
             m_state = m_input.LeftStick.x < 0 || m_input.LeftStick.x > 0 ? PlayerState.runing : m_jump.GetJumpState != JumpState.grounded ? PlayerState.jumping : PlayerState.idle;
-            m_dir = m_input.LeftStick.x < 0 ? PlayerDirection.left : PlayerDirection.right;
+
+            switch (m_input.LeftStick.x)
+            {
+                case float a when a < 0:
+                    {
+                        m_dir = PlayerDirection.left;
+                        break;
+                    }
+                case float a when a > 0:
+                    {
+                        m_dir = PlayerDirection.right;
+                        break;
+                    }
+                default:
+                    break;
+            }
+
             transform.position += (Vector3)m_input.LeftStick * m_movementSpeed * Time.deltaTime;
         }
     }
@@ -43,8 +59,8 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
 internal enum PlayerDirection
 {
-    left = 0,
-    right,
+    right = 0,
+    left,
 }
 
 internal enum PlayerState

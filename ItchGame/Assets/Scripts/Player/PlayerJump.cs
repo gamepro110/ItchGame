@@ -6,6 +6,7 @@ internal enum JumpState
     grounded = 0,
     jumped,
     doubleJumped,
+    falling,
 }
 
 public class PlayerJump : MonoBehaviourPunCallbacks
@@ -13,6 +14,7 @@ public class PlayerJump : MonoBehaviourPunCallbacks
     private InputManager m_input = null;
 
     private RaycastHit2D m_hit = default;
+
 
     [SerializeField] private JumpState m_jumpState = JumpState.grounded;
     [SerializeField] private LayerMask m_layers = default;
@@ -42,6 +44,25 @@ public class PlayerJump : MonoBehaviourPunCallbacks
             {
                 m_jumpState = JumpState.grounded;
             }
+            else
+            {
+                m_jumpState = JumpState.falling;
+            }
+        }
+
+        switch (m_jumpState)
+        {
+            case JumpState.grounded:
+                break;
+            case JumpState.jumped:
+                transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
+                break;
+            case JumpState.doubleJumped:
+                transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
+                break;
+            case JumpState.falling:
+                transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
+                break;
         }
     }
 
@@ -65,6 +86,7 @@ public class PlayerJump : MonoBehaviourPunCallbacks
 
         //TODO calculate jump
         Debug.Log("CALCULATE JUMP", this);
+        transform.Translate(new Vector3(0, 2, 9));
 
         switch (m_jumpState)
         {
@@ -73,14 +95,17 @@ public class PlayerJump : MonoBehaviourPunCallbacks
                     m_jumpState = JumpState.jumped;
                 }
                 break;
-
             case JumpState.jumped:
                 {
                     m_jumpState = JumpState.doubleJumped;
                 }
                 break;
-
             case JumpState.doubleJumped:
+                break;
+            case JumpState.falling:
+                {
+                    m_jumpState = JumpState.jumped;
+                }
                 break;
         }
     }
