@@ -16,8 +16,8 @@ TagManager:
   - 
   - Player
   - Post Processing
-  - 
-  - Bullet
+  - Pickup
+  - Damagable
   - 
   - 
   - 
