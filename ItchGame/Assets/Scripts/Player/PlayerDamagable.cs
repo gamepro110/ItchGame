@@ -3,7 +3,7 @@ using TMPro;
 
 public class PlayerDamagable : MonoBehaviour, IHitable
 {
-    float m_damage = 0;
+    private float m_damage = 0;
     public float TotalDamage { get => m_damage; }
 
     public TMP_Text txt;
@@ -13,13 +13,23 @@ public class PlayerDamagable : MonoBehaviour, IHitable
         txt = FindObjectOfType<TMP_Text>();
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        txt.text = string.Format("{0}%", m_damage);
+        txt.text = string.Format("{0:0.00; 0.00;ZERO}%", m_damage);
     }
 
-    public void Hit(float dmg)
+    public void Hit(float dmg, bool heal = false)
     {
         m_damage += dmg;
+
+        if (!heal)
+        {
+            //start dmg flashing...
+        }
+
+        if (m_damage < 0)
+        {
+            m_damage = 0;
+        }
     }
 }

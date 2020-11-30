@@ -6,5 +6,5 @@ public interface IPickupAble
 {
     void PickupItem();
 
-    void UseItem();
+    void UseItem(GameObject obj);
 }
