@@ -5,12 +5,14 @@ using Photon.Pun;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
+using TMPro;
 
 public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Button MainMenuB;
     [SerializeField] private Button ConnectB;
     [SerializeField] private Button StartMultiB;
+    [SerializeField] private TMP_InputField tijdelijkRoom;
 
     private void Start()
     {
@@ -40,7 +42,7 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
 
-        PhotonNetwork.JoinOrCreateRoom("Testing", new Photon.Realtime.RoomOptions() { MaxPlayers = 3 }, null);
+        PhotonNetwork.JoinOrCreateRoom(tijdelijkRoom.text != "" ? tijdelijkRoom.text : "Testing", new Photon.Realtime.RoomOptions() { MaxPlayers = 3 }, null);
         ConnectB.interactable = false;
     }
     //temp
