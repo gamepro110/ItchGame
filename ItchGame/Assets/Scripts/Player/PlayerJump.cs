@@ -15,6 +15,7 @@ public class PlayerJump : MonoBehaviourPunCallbacks
 
     private RaycastHit2D m_hit = default;
 
+
     [SerializeField] private JumpState m_jumpState = JumpState.grounded;
     [SerializeField] private LayerMask m_layers = default;
     [SerializeField] private float m_jumpForce = 5f;
@@ -49,21 +50,18 @@ public class PlayerJump : MonoBehaviourPunCallbacks
             }
         }
 
-        //TODO calculate gravity
-        Debug.Log("Calculate Gravity");
-
         switch (m_jumpState)
         {
             case JumpState.grounded:
                 break;
             case JumpState.jumped:
-                transform.position += new Vector3(0, -0.1f, 0) * Time.deltaTime;
+                transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
                 break;
             case JumpState.doubleJumped:
-                transform.position += new Vector3(0, -0.1f, 0) * Time.deltaTime;
+                transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
                 break;
             case JumpState.falling:
-                transform.position += new Vector3(0, -0.1f, 0) * Time.deltaTime;
+                transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
                 break;
         }
     }
@@ -88,6 +86,7 @@ public class PlayerJump : MonoBehaviourPunCallbacks
 
         //TODO calculate jump
         Debug.Log("CALCULATE JUMP", this);
+        transform.Translate(new Vector3(0, 2, 9));
 
         switch (m_jumpState)
         {
