@@ -88,7 +88,7 @@ public class PlayerJump : MonoBehaviourPunCallbacks
         }
 
         //TODO calculate jump
-        Debug.Log("CALCULATE JUMP " + obj.started, this);
+        //Debug.Log("CALCULATE JUMP " + obj.started, this);
         transform.Translate(new Vector3(0, 2 / 10, 0) * Time.deltaTime);
 
         switch (m_jumpState)
@@ -120,7 +120,6 @@ public class PlayerJump : MonoBehaviourPunCallbacks
 
     private void PlayerJumpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-
     }
 
     private bool GroundCheck
