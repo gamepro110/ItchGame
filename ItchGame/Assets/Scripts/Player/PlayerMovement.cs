@@ -28,6 +28,11 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         {
             m_dir = PlayerDirection.left;
         }
+
+        if (!photonView.IsMine)
+        {
+            Destroy(GetComponent<Rigidbody2D>());
+        }
     }
 
     private void Update()
