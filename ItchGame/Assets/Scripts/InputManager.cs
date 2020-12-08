@@ -7,17 +7,24 @@ public class InputManager : MonoBehaviour
 
     internal Vector2 LeftStick { get => m_controls.Player.Movement.ReadValue<Vector2>(); }
 
-    internal Action<UnityEngine.InputSystem.InputAction.CallbackContext> jump;
+    internal Action<UnityEngine.InputSystem.InputAction.CallbackContext> jump_started;
+    internal Action<UnityEngine.InputSystem.InputAction.CallbackContext> jump_canceled;
 
     private void Awake()
     {
         m_controls = new GameControls();
-        m_controls.Player.Jump.performed += Jump_performed;
+        m_controls.Player.Jump.started += Jump_started;
+        m_controls.Player.Jump.canceled += Jump_canceled;
     }
 
-    private void Jump_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void Jump_started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        jump(obj);
+        jump_started(obj);
+    }
+
+    private void Jump_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        jump_canceled(obj);
     }
 
     private void OnEnable()
