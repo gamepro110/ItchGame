@@ -15,7 +15,6 @@ public class PlayerJump : MonoBehaviourPunCallbacks
 
     private RaycastHit2D m_hit = default;
 
-
     [SerializeField] private JumpState m_jumpState = JumpState.grounded;
     [SerializeField] private LayerMask m_layers = default;
     [SerializeField] private float m_jumpForce = 5f;
@@ -55,12 +54,15 @@ public class PlayerJump : MonoBehaviourPunCallbacks
         {
             case JumpState.grounded:
                 break;
+
             case JumpState.jumped:
                 transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
                 break;
+
             case JumpState.doubleJumped:
                 transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
                 break;
+
             case JumpState.falling:
                 transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
                 break;
@@ -94,15 +96,20 @@ public class PlayerJump : MonoBehaviourPunCallbacks
             case JumpState.grounded:
                 {
                     m_jumpState = JumpState.jumped;
+                    break;
                 }
-                break;
+
             case JumpState.jumped:
                 {
                     m_jumpState = JumpState.doubleJumped;
+                    break;
                 }
-                break;
+
             case JumpState.doubleJumped:
-                break;
+                {
+                    break;
+                }
+
             case JumpState.falling:
                 {
                     m_jumpState = JumpState.jumped;

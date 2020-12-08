@@ -15,26 +15,25 @@ public class Bullet : MonoBehaviourPunCallbacks
     private IHitable m_hitable = null;
     [SerializeField] private float m_dmg = 2;
     [SerializeField] private Direction m_currentDir = Direction.Right;
+    [SerializeField] private LayerMask m_layers = default;
+    private RaycastHit2D m_hit = default;
 
     internal void SetDirection(Direction _dir)
     {
         m_currentDir = _dir;
     }
 
-    void Update()
+    private void Update()
     {
         transform.position += (new Vector3((int)m_currentDir, 0, 0) * m_bulletSpeed) * Time.deltaTime;
 
-        //TODO check if collider is overlapping other collider /or/ check if raycircle is touching
-    }
+        m_hit = Physics2D.CircleCast(transform.position, 1, Vector2.zero, 0, m_layers);
+        m_hitable = m_hit.transform?.GetComponent<IHitable>();
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        m_hitable = collision.gameObject.GetComponent<IHitable>();
         if (m_hitable != null)
         {
             m_hitable.Hit(m_dmg);
+            PhotonNetwork.Destroy(gameObject);
         }
-        PhotonNetwork.Destroy(gameObject);
     }
 }

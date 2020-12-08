@@ -320,14 +320,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3988495136898361677}
+  - component: {fileID: 1659514971468867333}
   - component: {fileID: 7632230416525126739}
+  - component: {fileID: 6039696999566236905}
   - component: {fileID: -1679809677543907227}
   - component: {fileID: 4339181902183891014}
   - component: {fileID: 690902083775751895}
-  - component: {fileID: 5408392050805732990}
-  - component: {fileID: 6106567433249543294}
+  - component: {fileID: 7244698772335954395}
   - component: {fileID: -5393297441595221416}
-  - component: {fileID: -4955968447323993709}
+  - component: {fileID: 6106567433249543294}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -350,6 +351,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &1659514971468867333
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3988495136898361650}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!70 &7632230416525126739
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -366,6 +388,21 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.48}
   m_Size: {x: 0.5, y: 2}
   m_Direction: 0
+--- !u!114 &6039696999566236905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3988495136898361650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9afc9215da48bd348b84fd8b5f0851fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_layers:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &-1679809677543907227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,7 +451,7 @@ MonoBehaviour:
   m_jumpForceMultiplier: 0.8
   m_isGrounded: 0
   m_groundedRayLength: 0.52
---- !u!114 &5408392050805732990
+--- !u!114 &7244698772335954395
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -426,6 +463,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48286be72e002fe45bce985cdacff6cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5393297441595221416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3988495136898361650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
 --- !u!114 &6106567433249543294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,42 +501,6 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-5393297441595221416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3988495136898361650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
---- !u!50 &-4955968447323993709
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3988495136898361650}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!95 &6611001897278056601
 Animator:
   serializedVersion: 3
@@ -504,7 +520,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5872132201349551807
+--- !u!114 &1463613214261017944
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -523,11 +539,11 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 7646688863603269752}
+  - {fileID: 5531842173443536574}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7646688863603269752
+--- !u!114 &5531842173443536574
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
