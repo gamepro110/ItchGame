@@ -29,7 +29,8 @@ public class PlayerJump : MonoBehaviourPunCallbacks
         m_input = FindObjectOfType<InputManager>();
         if (photonView.IsMine)
         {
-            m_input.jump = PlayerJumpAction;
+            m_input.jump_started = PlayerJumpStarted;
+            m_input.jump_canceled = PlayerJumpCanceled;
         }
     }
 
@@ -68,7 +69,7 @@ public class PlayerJump : MonoBehaviourPunCallbacks
         }
     }
 
-    private void PlayerJumpAction(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void PlayerJumpStarted(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         Vector2 vel = Vector2.zero;
 
@@ -87,8 +88,8 @@ public class PlayerJump : MonoBehaviourPunCallbacks
         }
 
         //TODO calculate jump
-        Debug.Log("CALCULATE JUMP", this);
-        transform.Translate(new Vector3(0, 2, 9));
+        Debug.Log("CALCULATE JUMP " + obj.started, this);
+        transform.Translate(new Vector3(0, 2 / 10, 0) * Time.deltaTime);
 
         switch (m_jumpState)
         {
@@ -115,6 +116,11 @@ public class PlayerJump : MonoBehaviourPunCallbacks
                 }
                 break;
         }
+    }
+
+    private void PlayerJumpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+
     }
 
     private bool GroundCheck
