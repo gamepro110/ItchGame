@@ -12,6 +12,7 @@ internal enum JumpState
 public class PlayerJump : MonoBehaviourPunCallbacks
 {
     private InputManager m_input = null;
+    private Rigidbody2D m_RB = null;
 
     private RaycastHit2D m_hit = default;
 
@@ -26,6 +27,7 @@ public class PlayerJump : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        m_RB = GetComponent<Rigidbody2D>();
         m_input = FindObjectOfType<InputManager>();
         if (photonView.IsMine)
         {
@@ -56,15 +58,15 @@ public class PlayerJump : MonoBehaviourPunCallbacks
                 break;
 
             case JumpState.jumped:
-                transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
+                //transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
                 break;
 
             case JumpState.doubleJumped:
-                transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
+                //transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
                 break;
 
             case JumpState.falling:
-                transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
+                //transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
                 break;
         }
     }
@@ -82,14 +84,12 @@ public class PlayerJump : MonoBehaviourPunCallbacks
                 }
             case JumpState.jumped:
                 {
+                    m_RB.velocity = new Vector2(m_RB.velocity.x, m_RB.velocity.y < 0 ? 0 : m_RB.velocity.y);
                     vel = Vector2.up * m_jumpForce * (m_jumpForceMultiplier);
                     break;
                 }
         }
-
-        //TODO calculate jump
-        //Debug.Log("CALCULATE JUMP " + obj.started, this);
-        transform.Translate(new Vector3(0, 2 / 10, 0) * Time.deltaTime);
+        m_RB.velocity += vel;
 
         switch (m_jumpState)
         {
