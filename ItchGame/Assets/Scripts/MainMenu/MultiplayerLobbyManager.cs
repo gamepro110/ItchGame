@@ -14,6 +14,8 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] private Button StartMultiB;
     [SerializeField] private TMP_InputField tijdelijkRoom;
 
+    [SerializeField, Range(1, 10)] private int m_gameSceneIndex = 0;
+
     private void Start()
     {
         MainMenuB.onClick.AddListener(GoToMainMenu);
@@ -23,19 +25,19 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    void GoToMainMenu()
+    private void GoToMainMenu()
     {
         PhotonNetwork.Disconnect();
     }
 
-    void GoConnect()
+    private void GoConnect()
     {
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    void StartMulti()
+    private void StartMulti()
     {
-        PhotonNetwork.LoadLevel(2);
+        PhotonNetwork.LoadLevel(m_gameSceneIndex);
     }
 
     public override void OnConnectedToMaster()
@@ -45,6 +47,7 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinOrCreateRoom(tijdelijkRoom.text != "" ? tijdelijkRoom.text : "Testing", new Photon.Realtime.RoomOptions() { MaxPlayers = 3 }, null);
         ConnectB.interactable = false;
     }
+
     //temp
     public override void OnJoinedRoom()
     {
@@ -52,6 +55,7 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
 
         StartMultiB.interactable = true;
     }
+
     //temp
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {

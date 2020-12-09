@@ -1,6 +1,4 @@
 ﻿using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealBlob : MonoBehaviour, IPickupAble
@@ -20,6 +18,8 @@ public class HealBlob : MonoBehaviour, IPickupAble
         m_col.enabled = false;
         m_RB.simulated = false;
         transform.SetParent(parent);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
     }
 
     public void UseItem(GameObject obj)

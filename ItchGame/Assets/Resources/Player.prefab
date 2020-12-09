@@ -464,7 +464,7 @@ MonoBehaviour:
   m_jumpForce: 5
   m_jumpForceMultiplier: 0.8
   m_isGrounded: 0
-  m_groundedRayLength: 0.52
+  m_groundedRayLength: 0.53
 --- !u!114 &7244698772335954395
 MonoBehaviour:
   m_ObjectHideFlags: 0

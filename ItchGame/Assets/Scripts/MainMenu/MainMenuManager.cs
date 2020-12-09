@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Photon.Pun;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -12,9 +9,9 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Button OptionsB;
     [SerializeField] private Button QuitB;
 
-    [SerializeField, Range(1, 10)] private int m_startMultiplayerSceneIndex = 0;
-    [SerializeField, Range(1, 10)] private int m_controlsSceneIndex = 0;
-    [SerializeField, Range(1, 10)] private int m_optionsSceneIndex = 0;
+    [SerializeField, Range(0, 10)] private int m_startMultiplayerSceneIndex = 0;
+    [SerializeField, Range(0, 10)] private int m_controlsSceneIndex = 0;
+    [SerializeField, Range(0, 10)] private int m_optionsSceneIndex = 0;
 
     private void Start()
     {
