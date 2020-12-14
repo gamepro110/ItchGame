@@ -14,7 +14,7 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] private Button StartMultiB;
     [SerializeField] private TMP_InputField tijdelijkRoom;
 
-    [SerializeField, Range(1, 10)] private int m_gameSceneIndex = 0;
+    [SerializeField, Range(0, 10)] private int m_gameSceneIndex = 0;
 
     private void Start()
     {
