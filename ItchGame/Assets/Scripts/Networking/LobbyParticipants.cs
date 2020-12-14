@@ -9,7 +9,7 @@ public class LobbyParticipants : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        m_text.text = m_msg;
+        m_text.text = string.Empty;
     }
 
     private void LateUpdate()
