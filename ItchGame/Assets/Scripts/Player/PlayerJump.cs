@@ -120,7 +120,6 @@ public class PlayerJump : MonoBehaviourPunCallbacks
 
     private void PlayerJumpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-
     }
 
     private bool GroundCheck
