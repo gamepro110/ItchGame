@@ -11,7 +11,14 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
-            PhotonNetwork.Instantiate(m_playerPrefabStr, Vector3.zero, Quaternion.identity);
+            int i = 0;
+            foreach (var item in PhotonNetwork.CurrentRoom.Players)
+            {
+                i = item.Key;
+                break;
+            }
+
+            PhotonNetwork.Instantiate(m_playerPrefabStr, new Vector3(0, i, 0), Quaternion.identity);
         }
         else
         {
