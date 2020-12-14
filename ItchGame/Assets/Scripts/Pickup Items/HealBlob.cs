@@ -4,6 +4,7 @@ using UnityEngine;
 public class HealBlob : MonoBehaviour, IPickupAble
 {
     [SerializeField] private float m_healAmount = 10;
+    private PlayerPickup m_pickup = null;
     private Rigidbody2D m_RB = null;
     private Collider2D m_col = null;
 
@@ -18,6 +19,7 @@ public class HealBlob : MonoBehaviour, IPickupAble
         m_col.enabled = false;
         m_RB.simulated = false;
         transform.SetParent(parent);
+        m_pickup = parent.gameObject.GetComponentInParent<PlayerPickup>();
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
     }
@@ -25,7 +27,7 @@ public class HealBlob : MonoBehaviour, IPickupAble
     public void UseItem(GameObject obj)
     {
         obj.GetComponent<PlayerDamagable>().Hit(-m_healAmount, true);
-
+        m_pickup.m_heldItem = null;
         PhotonNetwork.Destroy(gameObject);
     }
 }

@@ -9,10 +9,11 @@ public class InputManager : MonoBehaviour
     internal Vector2 LeftStick { get => m_controls.Player.Movement.ReadValue<Vector2>(); }
     //internal bool Pickup_UseItem { get => m_controls.Player.Pickup_UseItem.ReadValue<float>() > 0; }
 
-    internal Action<UnityEngine.InputSystem.InputAction.CallbackContext> jump_started;
-    internal Action<UnityEngine.InputSystem.InputAction.CallbackContext> jump_canceled;
-    internal Action<UnityEngine.InputSystem.InputAction.CallbackContext> OnPickup;
-    internal Action<UnityEngine.InputSystem.InputAction.CallbackContext> OnUseItem;
+    internal Action<InputAction.CallbackContext> jump_started;
+    internal Action<InputAction.CallbackContext> jump_canceled;
+    internal Action<InputAction.CallbackContext> OnPickup;
+    internal Action<InputAction.CallbackContext> OnUseItem;
+    internal Action<InputAction.CallbackContext> TempYeet;
 
     private void Awake()
     {
@@ -20,7 +21,9 @@ public class InputManager : MonoBehaviour
         m_controls.Player.Jump.started += JumpStarted;
         m_controls.Player.Jump.canceled += JumpCanceled;
         m_controls.Player.PickupItem.performed += PickupItem;
-        m_controls.Player.UseItem.performed += UseHeldItem;
+        m_controls.Player.UseItem.started += UseHeldItem;
+
+        m_controls.Player.Attack.performed += TempYeeting;
     }
 
     private void JumpStarted(InputAction.CallbackContext obj) => jump_started(obj);
@@ -30,6 +33,8 @@ public class InputManager : MonoBehaviour
     private void PickupItem(InputAction.CallbackContext obj) => OnPickup(obj);
 
     private void UseHeldItem(InputAction.CallbackContext obj) => OnUseItem(obj);
+
+    private void TempYeeting(InputAction.CallbackContext obj) => TempYeet(obj);
 
     private void OnEnable()
     {
