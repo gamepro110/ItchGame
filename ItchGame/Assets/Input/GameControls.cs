@@ -49,6 +49,14 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""385cb3b2-2ae1-431e-be8d-d386b3668a80"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -187,7 +195,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cc834a09-0839-44d2-8e06-2bf7599a96e3"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -198,7 +206,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7622a829-5392-4d11-a6f0-0eda8d0da003"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -209,7 +217,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2e1fbbe5-62e9-4d6c-87f4-6beacf66a43f"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -220,11 +228,33 @@ public class @GameControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""87d8abf5-4ae6-415a-96cf-c3bc24af45a4"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4634a605-325c-43d3-81e0-21f03a5779bb"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3028af48-ed93-427d-9d29-312280a27e88"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -239,6 +269,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_PickupItem = m_Player.FindAction("PickupItem", throwIfNotFound: true);
         m_Player_UseItem = m_Player.FindAction("UseItem", throwIfNotFound: true);
+        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -292,6 +323,7 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_PickupItem;
     private readonly InputAction m_Player_UseItem;
+    private readonly InputAction m_Player_Attack;
     public struct PlayerActions
     {
         private @GameControls m_Wrapper;
@@ -300,6 +332,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @PickupItem => m_Wrapper.m_Player_PickupItem;
         public InputAction @UseItem => m_Wrapper.m_Player_UseItem;
+        public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -321,6 +354,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @UseItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
                 @UseItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
                 @UseItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
+                @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -337,6 +373,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @UseItem.started += instance.OnUseItem;
                 @UseItem.performed += instance.OnUseItem;
                 @UseItem.canceled += instance.OnUseItem;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
             }
         }
     }
@@ -347,5 +386,6 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnPickupItem(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
 }
