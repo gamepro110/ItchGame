@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviourPunCallbacks
     [SerializeField] private float m_bulletSpeed;
     private IHitable m_hitable = null;
     [SerializeField] private float m_dmg = 2;
-    [SerializeField] private Direction m_currentDir = Direction.Right;
+    [SerializeField] internal Direction m_currentDir = Direction.Right;
     [SerializeField] private LayerMask m_layers = default;
     private RaycastHit2D m_hit = default;
     [SerializeField, Range(2, 10)] private float m_knockbackForce = 2;
@@ -34,11 +34,10 @@ public class Bullet : MonoBehaviourPunCallbacks
 
         if (m_hitable != null)
         {
-            m_hitable.Hit(m_dmg);
+            m_hitable.Hit(m_dmg, hitter: gameObject);
 
             Rigidbody2D m_rb = m_hit.collider.gameObject.GetComponent<Rigidbody2D>();
-            m_rb.velocity = ((transform.position - m_hit.collider.transform.position) * -1) * m_knockbackForce;
-
+            //m_rb.velocity = ((transform.position - m_hit.collider.transform.position) * -1) * m_knockbackForce;
             PhotonNetwork.Destroy(gameObject);
         }
     }
