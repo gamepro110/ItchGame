@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,10 +20,10 @@ public class InputManager : MonoBehaviour
         m_controls = new GameControls();
         m_controls.Player.Jump.started += JumpStarted;
         m_controls.Player.Jump.canceled += JumpCanceled;
-        m_controls.Player.PickupItem.performed += PickupItem;
+        m_controls.Player.PickupItem.started += PickupItem;
         m_controls.Player.UseItem.started += UseHeldItem;
 
-        m_controls.Player.Attack.performed += TempYeeting;
+        //m_controls.Player.Attack.performed += TempYeeting;
     }
 
     private void JumpStarted(InputAction.CallbackContext obj) => jump_started(obj);
@@ -34,7 +34,7 @@ public class InputManager : MonoBehaviour
 
     private void UseHeldItem(InputAction.CallbackContext obj) => OnUseItem(obj);
 
-    private void TempYeeting(InputAction.CallbackContext obj) => TempYeet(obj);
+    //private void TempYeeting(InputAction.CallbackContext obj) => TempYeet(obj);
 
     private void OnEnable()
     {
