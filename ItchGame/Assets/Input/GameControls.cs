@@ -36,7 +36,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""PickupItem"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""e3f2cddc-94ac-4676-a3e6-d080f9f319f3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
