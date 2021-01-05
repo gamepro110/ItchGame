@@ -27,18 +27,22 @@ public class Bullet : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        transform.position += (new Vector3((int)m_currentDir, 0, 0) * m_bulletSpeed) * Time.deltaTime;
-
-        m_hit = Physics2D.CircleCast(transform.position, m_bulletSize, Vector2.zero, 0, m_layers);
-        m_hitable = m_hit.transform?.GetComponent<IHitable>();
-
-        if (m_hitable != null)
+        if (photonView.IsMine)
         {
-            m_hitable.Hit(m_dmg, hitter: gameObject);
 
-            Rigidbody2D m_rb = m_hit.collider.gameObject.GetComponent<Rigidbody2D>();
-            //m_rb.velocity = ((transform.position - m_hit.collider.transform.position) * -1) * m_knockbackForce;
-            PhotonNetwork.Destroy(gameObject);
+            transform.position += (new Vector3((int)m_currentDir, 0, 0) * m_bulletSpeed) * Time.deltaTime;
+
+            m_hit = Physics2D.CircleCast(transform.position, m_bulletSize, Vector2.zero, 0, m_layers);
+            m_hitable = m_hit.transform?.GetComponent<IHitable>();
+
+            if (m_hitable != null)
+            {
+                m_hitable.Hit(m_dmg, hitter: gameObject);
+
+                //Rigidbody2D m_rb = m_hit.collider.gameObject.GetComponent<Rigidbody2D>();
+                //m_rb.velocity = ((transform.position - m_hit.collider.transform.position) * -1) * m_knockbackForce;
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
     }
 }
