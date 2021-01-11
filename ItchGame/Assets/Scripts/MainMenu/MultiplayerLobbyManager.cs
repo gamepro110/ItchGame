@@ -44,7 +44,7 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
 
-        PhotonNetwork.JoinOrCreateRoom(tijdelijkRoom.text != "" ? tijdelijkRoom.text : "Testing", new Photon.Realtime.RoomOptions() { MaxPlayers = 3 }, null);
+        PhotonNetwork.JoinOrCreateRoom(tijdelijkRoom.text != string.Empty ? tijdelijkRoom.text : "Testing", new Photon.Realtime.RoomOptions() { MaxPlayers = 3 }, null);
         ConnectB.interactable = false;
     }
 
