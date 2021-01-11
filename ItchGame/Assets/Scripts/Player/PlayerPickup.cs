@@ -2,11 +2,11 @@
 using UnityEngine.InputSystem;
 using Photon.Pun;
 
-public class PlayerPickup : MonoBehaviourPunCallbacks
+public class PlayerPickup : PickupBase
 {
     private InputManager m_input = null;
 
-    private Collider2D m_coll = null;
+    private Vector2 m_castSize = Vector2.zero;
     [SerializeField] private RaycastHit2D m_hit = default;
     private IPickupAble m_pickupable = null;
     [SerializeField] private LayerMask m_layers = default;
@@ -18,7 +18,7 @@ public class PlayerPickup : MonoBehaviourPunCallbacks
         if (photonView.IsMine)
         {
             m_input = FindObjectOfType<InputManager>();
-            m_coll = GetComponent<Collider2D>();
+            m_castSize = GetComponent<Collider2D>().bounds.size;
 
             m_input.OnPickup += Pickup;
         }
@@ -26,7 +26,7 @@ public class PlayerPickup : MonoBehaviourPunCallbacks
 
     private void Pickup(InputAction.CallbackContext obj)
     {
-        m_hit = Physics2D.BoxCast(transform.position, m_coll.bounds.size, 0, Vector2.zero, 0, m_layers);
+        m_hit = Physics2D.BoxCast(transform.position, m_castSize, 0, Vector2.zero, 0, m_layers);
         if (m_hit.transform != null)
         {
             if (m_heldItem == null)

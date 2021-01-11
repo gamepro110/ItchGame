@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +12,8 @@ public class InputManager : MonoBehaviour
     internal Action<InputAction.CallbackContext> jump_started;
     internal Action<InputAction.CallbackContext> jump_canceled;
     internal Action<InputAction.CallbackContext> OnPickup;
-    internal Action<InputAction.CallbackContext> OnUseItem;
+    internal Action<InputAction.CallbackContext> OnUseItemStarted;
+    internal Action<InputAction.CallbackContext> OnUseItemEnded;
     internal Action<InputAction.CallbackContext> TempYeet;
 
     private void Awake()
@@ -20,10 +21,11 @@ public class InputManager : MonoBehaviour
         m_controls = new GameControls();
         m_controls.Player.Jump.started += JumpStarted;
         m_controls.Player.Jump.canceled += JumpCanceled;
-        m_controls.Player.PickupItem.performed += PickupItem;
-        m_controls.Player.UseItem.started += UseHeldItem;
+        m_controls.Player.PickupItem.started += PickupItem;
+        m_controls.Player.UseItem.started += UseHeldItemStart;
+        m_controls.Player.UseItem.canceled += UseHeldItemEnd;
 
-        m_controls.Player.Attack.performed += TempYeeting;
+        //m_controls.Player.Attack.performed += TempYeeting;
     }
 
     private void JumpStarted(InputAction.CallbackContext obj) => jump_started(obj);
@@ -32,9 +34,11 @@ public class InputManager : MonoBehaviour
 
     private void PickupItem(InputAction.CallbackContext obj) => OnPickup(obj);
 
-    private void UseHeldItem(InputAction.CallbackContext obj) => OnUseItem(obj);
+    private void UseHeldItemStart(InputAction.CallbackContext obj) => OnUseItemStarted(obj);
 
-    private void TempYeeting(InputAction.CallbackContext obj) => TempYeet(obj);
+    private void UseHeldItemEnd(InputAction.CallbackContext obj) => OnUseItemEnded(obj);
+
+    //private void TempYeeting(InputAction.CallbackContext obj) => TempYeet(obj);
 
     private void OnEnable()
     {

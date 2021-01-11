@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public enum Direction
-{
-    Left = -1,
-    Right = 1,
-}
-
 public class Bullet : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float m_bulletSpeed;
@@ -17,7 +11,8 @@ public class Bullet : MonoBehaviourPunCallbacks
     [SerializeField] internal Direction m_currentDir = Direction.Right;
     [SerializeField] private LayerMask m_layers = default;
     private RaycastHit2D m_hit = default;
-    [SerializeField, Range(2, 10)] private float m_knockbackForce = 2;
+
+    //[SerializeField, Range(2, 10)] private float m_knockbackForce = 2;
     [SerializeField, Range(0, 1)] private float m_bulletSize = 0;
 
     internal void SetDirection(Direction _dir)
@@ -37,7 +32,8 @@ public class Bullet : MonoBehaviourPunCallbacks
 
             if (m_hitable != null)
             {
-                m_hitable.Hit(m_dmg, hitter: gameObject);
+                // disabled because this will be deleted soon
+                //m_hitable.Hit(m_dmg, hitter: gameObject);
 
                 //Rigidbody2D m_rb = m_hit.collider.gameObject.GetComponent<Rigidbody2D>();
                 //m_rb.velocity = ((transform.position - m_hit.collider.transform.position) * -1) * m_knockbackForce;
