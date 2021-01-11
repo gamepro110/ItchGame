@@ -59,7 +59,8 @@ public class Rifle : PickupBase
             }
         }
 
-        Mathf.Clamp(m_fireRate -= Time.deltaTime, 0, 100);
+        m_fireRate -= Time.deltaTime;
+        m_fireRate = Mathf.Clamp(m_fireRate, 0, 10);
     }
 
     private void OnItemThrow()
