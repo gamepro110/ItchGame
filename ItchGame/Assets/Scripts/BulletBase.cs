@@ -15,10 +15,11 @@ public class BulletBase : MonoBehaviourPunCallbacks
     protected float m_damage = 0;
     protected float m_speed = 0;
     protected GameObject m_owner = null;
+    [SerializeField] protected LayerMask m_hitLayerMask = default;
 
     protected bool HitCheck()
     {
-        m_rayhit = Physics2D.CircleCast(transform.position, 1, Vector2.up);
+        m_rayhit = Physics2D.CircleCast(transform.position, 1, Vector2.up, 0, m_hitLayerMask);
 
         m_hitable = m_rayhit.transform?.GetComponent<IHitable>();
 

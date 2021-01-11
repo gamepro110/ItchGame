@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Photon.Pun;
 
 public class DeathCage : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class DeathCage : MonoBehaviour
         m_hitable = collision.gameObject.GetComponent<IHitable>();
         if (m_hitable != null)
         {
+            collision.gameObject.GetComponent<PlayerDamagable>()?.Hit(500);
             collision.gameObject.SetActive(false);
             return;
         }
@@ -18,8 +18,19 @@ public class DeathCage : MonoBehaviour
         m_pickupAble = collision.gameObject.GetComponent<IPickupAble>();
         if (m_pickupAble != null)
         {
-            collision.gameObject.SetActive(false);
+            try
+            {
+                PhotonNetwork.Destroy(collision.gameObject);
+            }
+            catch (System.Exception)
+            {
+                Debug.LogError("IPickupable hit deathcage but could not be destroyed by photonNetwork.Destroy(GameObject go). destroyed locally only");
+                Destroy(collision.gameObject);
+            }
+
             return;
         }
+
+        collision.gameObject.SetActive(false);
     }
 }
