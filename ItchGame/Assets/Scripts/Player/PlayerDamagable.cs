@@ -3,7 +3,9 @@ using TMPro;
 
 public class PlayerDamagable : MonoBehaviour, IHitable
 {
-    private float m_damage = 0;
+    [SerializeField] private float m_damage = 0;
+    [SerializeField] private float m_dmgCap = 0;
+    [SerializeField] private string m_deathText = string.Empty;
     public float TotalDamage { get => m_damage; }
 
     public TMP_Text txt;
@@ -17,7 +19,12 @@ public class PlayerDamagable : MonoBehaviour, IHitable
 
     private void LateUpdate()
     {
-        txt.text = string.Format("{0:0.00; 0.00;ZERO}%", m_damage);
+        txt.text = string.Format("{0:0.00; 0.00;ZERO;}%", m_damage);
+        if (m_damage < m_dmgCap)
+        {
+            txt.text = m_deathText;
+            enabled = false;
+        }
     }
 
     public void Hit(float dmg, GameObject owner = null, GameObject hitter = null)
@@ -46,8 +53,10 @@ public class PlayerDamagable : MonoBehaviour, IHitable
         }
     }
 
-    public void Heal(float heal)
+    public void Heal(float amount)
     {
-        m_damage -= heal;
+        m_damage -= amount;
+
+        if (m_damage < 1) m_damage = 0;
     }
 }

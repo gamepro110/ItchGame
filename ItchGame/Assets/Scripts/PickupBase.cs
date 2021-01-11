@@ -57,7 +57,7 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
         m_pickup = null;
 
         CustomThrowAction?.Invoke();
-        m_collider.enabled = true;
+        //m_collider.enabled = true;
     }
 
     private Collider2D GetPickupCollider

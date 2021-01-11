@@ -8,15 +8,16 @@ public class Rifle : PickupBase
     private PlayerMovement m_movement = null;
     [SerializeField] private GameObject m_bullet = null;
     [SerializeField] private Transform m_nuzzlePos = null;
-    [SerializeField, Range(1, 10)] private float m_damage = 0;
+    [SerializeField, Range(1, 50)] private float m_damage = 0;
     [SerializeField, Range(1, 20)] private float m_bulletSpeed = 0;
     [SerializeField, Range(1, 10)] private int m_bulletLifetime = 0;
 
     [SerializeField] private int m_ammo = 0;
-    [SerializeField, Range(10, 15)] private int m_minAmmo = 0;
-    [SerializeField, Range(15, 30)] private int m_maxAmmo = 0;
-    [SerializeField, Range(0.01f, 5f)] private float m_fireRate = 0;
+    [SerializeField, Range(1, 15)] private int m_minAmmo = 0;
+    [SerializeField, Range(1, 30)] private int m_maxAmmo = 0;
+    [SerializeField, Range(0, 5f)] private float m_fireRate = 0;
     private float m_setFireRate = 0;
+    [SerializeField, Range(0, 20)] private float m_gunThrowForce = 0;
 
     private void Start()
     {
@@ -33,14 +34,13 @@ public class Rifle : PickupBase
     {
         m_fireRate = 0;
         m_movement = transform.parent.GetComponentInParent<PlayerMovement>();
-        GetComponent<GunDir>().SetMovement(m_movement);
     }
 
     private void UsingItem(GameObject obj)
     {
-        if (m_fireRate < 0)
+        if (m_fireRate == 0)
         {
-            if (m_ammo > 1)
+            if (m_ammo > 0)
             {
                 Direction dir = m_movement.PlayerDir == PlayerDirection.left ? Direction.Left : Direction.Right;
                 GameObject go = PhotonNetwork.Instantiate(m_bullet.name, m_nuzzlePos.position, Quaternion.identity);
@@ -55,7 +55,8 @@ public class Rifle : PickupBase
             }
             else
             {
-                ThrowItem(Vector2.up * 6);
+                Vector2 dir = new Vector2((float)(m_movement.PlayerDir == PlayerDirection.left ? Direction.Right : Direction.Left), m_gunThrowForce);
+                ThrowItem(dir);
             }
         }
 
@@ -65,7 +66,6 @@ public class Rifle : PickupBase
 
     private void OnItemThrow()
     {
-        GetComponent<GunDir>().SetMovement(null);
         Debug.Log("yeet gun");
     }
 
