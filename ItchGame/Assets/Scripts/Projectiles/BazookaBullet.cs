@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Photon.Pun;
+using System.Collections.Generic;
 
 public class BazookaBullet : BulletBase
 {
@@ -9,12 +10,12 @@ public class BazookaBullet : BulletBase
     [SerializeField, Range(0.5f, 10)] private float ExplosionDmgRange;
 
     private RaycastHit2D ExplosionRangeRayHit;
+    [SerializeField]private LayerMask layer;
 
     private void Start()
     {
         m_direction = new Vector3((int)m_dir, 0);
 
-        ExplosionRangeRayHit = Physics2D.CircleCast(transform.position, ExplosionDmgRange, new Vector2());
     }
 
     private void Update()
@@ -23,7 +24,7 @@ public class BazookaBullet : BulletBase
 
         if (HitCheck())
         {
-            m_hitable?.Hit(m_damage, m_owner, gameObject);
+            //m_hitable?.Hit(m_damage, m_owner, gameObject);
 
             BazookaBoom();
         }
@@ -31,10 +32,11 @@ public class BazookaBullet : BulletBase
 
     void BazookaBoom()
     {
-        if (ExplosionRangeRayHit.collider.GetComponent<IHitable>() != null)
-        {
-            ExplosionRangeRayHit.collider.GetComponent<IHitable>().Hit(m_damage, m_owner, gameObject);
-        }
+        ExplosionRangeRayHit = Physics2D.CircleCast(transform.position, ExplosionDmgRange, Vector2.zero, 0, layer);
+
+        List<IHitable> hits = new List<IHitable>(ExplosionRangeRayHit.collider?.GetComponents<IHitable>());
+        hits.ForEach(x => Debug.Log(x.ToString()));
+        //hits.ForEach(x => x.Hit(m_damage, m_owner, gameObject));
     }
 
     private void OnDrawGizmos()
