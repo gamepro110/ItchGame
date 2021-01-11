@@ -50,7 +50,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,6 +112,86 @@ Transform:
   m_Father: {fileID: 7874084658987321352}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7129363801636656688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4841928905146386062}
+  - component: {fileID: 7264398611697679344}
+  m_Layer: 10
+  m_Name: Freeform Light 2D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4841928905146386062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7129363801636656688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7874084658987321352}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7264398611697679344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7129363801636656688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 0, a: 1}
+  m_Intensity: 1
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: 0.14185333, y: -0.40125328, z: 0}
+  - {x: 0.29898, y: -0.38009328, z: 0}
+  - {x: 0.61363983, y: -0.05466324, z: 0}
+  - {x: 0.8181865, y: 0.026450098, z: 0}
+  - {x: 0.66575336, y: 0.12264651, z: 0}
+  - {x: 0.21512651, y: 0.11461669, z: 0}
+  - {x: 0.17633319, y: 0.23099679, z: 0}
+  - {x: -0.14106703, y: 0.2486301, z: 0}
+  - {x: -0.23276019, y: 0.12167007, z: 0}
+  - {x: -0.8808799, y: 0.09443337, z: 0}
+  - {x: -0.84640026, y: -0.20631003, z: 0}
+  - {x: -0.257447, y: -0.26979, z: 0}
 --- !u!1 &7874084657722754777
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +242,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -207,7 +287,6 @@ GameObject:
   - component: {fileID: 7265009235311945793}
   - component: {fileID: 7874084658987321354}
   - component: {fileID: 7874084658987321365}
-  - component: {fileID: 7530984554167915472}
   - component: {fileID: 7874084658987321358}
   - component: {fileID: 7874084658987321359}
   m_Layer: 10
@@ -231,6 +310,7 @@ Transform:
   - {fileID: 7874084657722754776}
   - {fileID: 8497175917883561566}
   - {fileID: 8093307941425214032}
+  - {fileID: 4841928905146386062}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -333,18 +413,7 @@ MonoBehaviour:
   m_minAmmo: 10
   m_maxAmmo: 15
   m_fireRate: 0.5
---- !u!114 &7530984554167915472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7874084658987321356}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e86d349fda8d194aac348def38d8b7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_gunThrowForce: 10
 --- !u!114 &7874084658987321358
 MonoBehaviour:
   m_ObjectHideFlags: 0

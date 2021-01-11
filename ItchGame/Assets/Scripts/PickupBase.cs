@@ -51,7 +51,7 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
         transform.SetParent(null);
 
         m_RB.simulated = true;
-        m_RB.velocity += dir * Time.deltaTime;
+        m_RB.velocity += dir;
 
         m_pickup.m_heldItem = null;
         m_pickup = null;

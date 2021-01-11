@@ -20,10 +20,10 @@ public class PlayerDamagable : MonoBehaviour, IHitable
     private void LateUpdate()
     {
         txt.text = string.Format("{0:0.00; 0.00;ZERO;}%", m_damage);
-        if (m_damage < m_dmgCap)
+        if (m_damage > m_dmgCap)
         {
             txt.text = m_deathText;
-            enabled = false;
+            gameObject.SetActive(false);
         }
     }
 
