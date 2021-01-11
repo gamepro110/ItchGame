@@ -22,7 +22,7 @@ public class Rifle : PickupBase
     private void Start()
     {
         m_ammo = Random.Range(m_minAmmo, m_maxAmmo);
-        Debug.Log(m_ammo);
+
         Init();
         useItemAction = UsingItem;
         pickupItem = RiflePickup;
