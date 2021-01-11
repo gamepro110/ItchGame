@@ -9,8 +9,10 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
     private Collider2D m_collider = null;
 
     protected PlayerPickup m_pickup = null;
+
     protected Action<GameObject> useItemAction = null;
     protected Action pickupItem = null;
+    protected Action CustomThrowAction = null;
 
     protected void Init()
     {
@@ -42,6 +44,20 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
         {
             useItemAction(obj);
         }
+    }
+
+    public void ThrowItem(Vector2 dir)
+    {
+        transform.SetParent(null);
+
+        m_RB.simulated = true;
+        m_RB.velocity += dir * Time.deltaTime;
+
+        m_pickup.m_heldItem = null;
+        m_pickup = null;
+
+        CustomThrowAction?.Invoke();
+        m_collider.enabled = true;
     }
 
     private Collider2D GetPickupCollider
