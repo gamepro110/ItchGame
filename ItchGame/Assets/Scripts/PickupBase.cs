@@ -3,6 +3,7 @@ using UnityEngine;
 using Photon.Pun;
 using System.Collections.Generic;
 
+// TODO make player action to yeet weapon
 public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
 {
     private Rigidbody2D m_RB = null;
