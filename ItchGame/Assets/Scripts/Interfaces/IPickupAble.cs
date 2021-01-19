@@ -18,5 +18,5 @@ public interface IPickupAble
     /// <summary>
     /// item gets thrown after condition is met
     /// </summary>
-    void ThrowItem(Vector2 dir);
+    void ThrowItem(Vector2 dir, bool enableCollider = false);
 }

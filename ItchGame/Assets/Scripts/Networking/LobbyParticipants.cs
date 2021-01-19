@@ -20,6 +20,7 @@ public class LobbyParticipants : MonoBehaviourPunCallbacks
         }
     }
 
+    // TODO fix bug
     private void UpdateParticipants()
     {
         m_msg = string.Empty;

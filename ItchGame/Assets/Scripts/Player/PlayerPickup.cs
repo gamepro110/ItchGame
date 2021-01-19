@@ -26,9 +26,9 @@ public class PlayerPickup : PickupBase
 
     private void Pickup(InputAction.CallbackContext obj)
     {
-        m_hit = Physics2D.BoxCast(transform.position, m_castSize, 0, Vector2.zero, 0, m_layers);
         if (m_heldItem == null)
         {
+            m_hit = Physics2D.BoxCast(transform.position, m_castSize, 0, Vector2.zero, 0, m_layers);
             if (m_hit.transform != null)
             {
                 m_pickupable = m_hit.transform.GetComponent<IPickupAble>();
@@ -39,6 +39,10 @@ public class PlayerPickup : PickupBase
                     m_heldItem = m_pickupable;
                 }
             }
+        }
+        else
+        {
+            m_input.OnItemThrow(obj);
         }
     }
 }
