@@ -35,7 +35,7 @@ public class PlayerDamagable : MonoBehaviour, IHitable
 
             //start dmg flashing...
 
-            if (m_damage < 1)
+            if (m_damage > m_dmgCap)
             {
                 m_damage = 0;
                 gameObject.SetActive(false);
