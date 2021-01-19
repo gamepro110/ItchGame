@@ -1,21 +1,22 @@
 ﻿using UnityEngine;
 using Photon.Pun;
 using System.Collections.Generic;
+using System.Collections;
 
 public class BazookaBullet : BulletBase
 {
     private Vector3 m_direction = Vector3.zero;
+    private List<Collider2D> colls;
 
+    [SerializeField] private float m_explosionDMG;
 
     [SerializeField, Range(0.5f, 10)] private float ExplosionDmgRange;
-
-    private RaycastHit2D ExplosionRangeRayHit;
-    [SerializeField]private LayerMask layer;
 
     private void Start()
     {
         m_direction = new Vector3((int)m_dir, 0);
 
+        StartCoroutine(SelfDestroy());
     }
 
     private void Update()
@@ -24,19 +25,31 @@ public class BazookaBullet : BulletBase
 
         if (HitCheck())
         {
-            //m_hitable?.Hit(m_damage, m_owner, gameObject);
+            m_hitable?.Hit(m_damage, m_owner, gameObject);
 
             BazookaBoom();
+        }
+        if (m_hitable != null)
+        {
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 
     void BazookaBoom()
     {
-        ExplosionRangeRayHit = Physics2D.CircleCast(transform.position, ExplosionDmgRange, Vector2.zero, 0, layer);
+        colls = new List<Collider2D>(Physics2D.OverlapCircleAll(transform.position, ExplosionDmgRange, m_hitLayerMask));
 
-        List<IHitable> hits = new List<IHitable>(ExplosionRangeRayHit.collider?.GetComponents<IHitable>());
-        hits.ForEach(x => Debug.Log(x.ToString()));
-        //hits.ForEach(x => x.Hit(m_damage, m_owner, gameObject));
+
+        foreach (var item in colls)
+        {
+            item.GetComponent<IHitable>()?.Hit(m_explosionDMG, m_owner, gameObject);
+        }
+    }
+
+    private IEnumerator SelfDestroy()
+    {
+        yield return new WaitForSeconds(3f);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     private void OnDrawGizmos()
