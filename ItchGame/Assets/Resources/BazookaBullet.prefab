@@ -237,6 +237,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d302900c1b4a5945925cca4232969e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_hitLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_explosionDMG: 0
   ExplosionDmgRange: 1.5
 --- !u!114 &8702326186439599719
 MonoBehaviour:
@@ -291,4 +295,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 0.5

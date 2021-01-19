@@ -37,6 +37,15 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
 
     private void StartMulti()
     {
+            Debug.LogWarning("change back to 4");
+        if (Random.Range(0, 100) > 50)
+        {
+            m_gameSceneIndex = 3;
+        }
+        else
+        {
+            m_gameSceneIndex = 3;
+        }
         PhotonNetwork.LoadLevel(m_gameSceneIndex);
     }
 
