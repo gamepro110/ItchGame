@@ -11,6 +11,6 @@ public class TestTrap : MonoBehaviour
     {
         m_hit = Physics2D.CircleCast(transform.position, 1, Vector2.zero, 0, m_layers);
         m_hitable = m_hit.transform?.GetComponent<IHitable>();
-        m_hitable?.Hit(m_dmg);
+        m_hitable?.Hit(m_dmg, gameObject, gameObject);
     }
 }

@@ -1,4 +1,8 @@
-﻿internal interface IHitable
+﻿using UnityEngine;
+
+public interface IHitable
 {
-    void Hit(float dmg, bool heal = false);
+    void Hit(float dmg, GameObject owner = null, GameObject hitter = null);
+
+    void Heal(float heal);
 }

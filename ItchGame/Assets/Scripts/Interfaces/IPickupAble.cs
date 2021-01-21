@@ -14,4 +14,9 @@ public interface IPickupAble
     /// </summary>
     /// <param name="obj"></param>
     void UseItem(GameObject obj);
+
+    /// <summary>
+    /// item gets thrown after condition is met
+    /// </summary>
+    void ThrowItem(Vector2 dir);
 }
