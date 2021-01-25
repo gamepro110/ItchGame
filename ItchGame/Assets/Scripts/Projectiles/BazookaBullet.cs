@@ -12,6 +12,8 @@ public class BazookaBullet : BulletBase
 
     [SerializeField, Range(0.5f, 10)] private float ExplosionDmgRange;
 
+    [SerializeField] private GameObject explosioneffect;
+
     private void Start()
     {
         m_direction = new Vector3((int)m_dir, 0);
@@ -37,6 +39,8 @@ public class BazookaBullet : BulletBase
 
     void BazookaBoom()
     {
+        PhotonNetwork.Instantiate(explosioneffect.name, transform.position, Quaternion.identity);
+
         colls = new List<Collider2D>(Physics2D.OverlapCircleAll(transform.position, ExplosionDmgRange, m_hitLayerMask));
 
 
