@@ -13,12 +13,16 @@ public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable
     public TMP_Text txt;
     private Rigidbody2D m_RB;
 
+    [SerializeField] private SpriteOpacityManager m_objSprite;
+
     private void Start()
     {
         if (photonView.IsMine)
         {
             txt = FindObjectOfType<TMP_Text>();
             m_RB = GetComponent<Rigidbody2D>();
+
+            m_objSprite = GetComponent<SpriteOpacityManager>();
         }
     }
 
@@ -59,6 +63,8 @@ public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable
                 m_RB.velocity += newVel;
                 Debug.Log(m_RB.velocity + " " + m_RB.gameObject);
             }
+
+            HPToVisibility();
         }
     }
 
@@ -67,5 +73,13 @@ public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable
         m_damage -= amount;
 
         if (m_damage < 1) m_damage = 0;
+    }
+
+    private void HPToVisibility()
+    {
+        float op = (100 - (m_damage / m_dmgCap));
+        Debug.Log(op);
+
+        m_objSprite.UpdateOp(op);
     }
 }
