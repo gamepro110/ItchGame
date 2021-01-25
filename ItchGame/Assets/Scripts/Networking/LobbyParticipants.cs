@@ -16,18 +16,18 @@ public class LobbyParticipants : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
-            UpdateParticipants();
+            m_text.text = GetParticipants();
         }
     }
 
     // TODO fix bug
-    private void UpdateParticipants()
+    private string GetParticipants()
     {
-        m_msg = string.Empty;
+        m_msg = $"{(PhotonNetwork.IsMasterClient ? "\tyou are th [HOST]" : string.Empty)}";
         foreach (var item in PhotonNetwork.CurrentRoom.Players)
         {
-            m_msg += string.Format("\t{0}{1}\n", item.Value.NickName, PhotonNetwork.IsMasterClient ? "You`re the [HOST]" : string.Empty);
+            m_msg += string.Format("\t{0}\n", item.Value.NickName);
         }
-        m_text.text = m_msg;
+        return m_msg;
     }
 }

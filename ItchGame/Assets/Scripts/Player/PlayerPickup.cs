@@ -35,8 +35,9 @@ public class PlayerPickup : PickupBase
 
                 if (m_pickupable != null)
                 {
-                    m_pickupable.PickupItem(m_pickupParent);
-                    m_heldItem = m_pickupable;
+                    photonView.RPC("RPCPickupItem", RpcTarget.All, m_pickupParent);
+                    //m_pickupable.PickupItem(m_pickupParent);
+                    //m_heldItem = m_pickupable;
                 }
             }
         }
@@ -44,5 +45,12 @@ public class PlayerPickup : PickupBase
         {
             m_input.OnItemThrow(obj);
         }
+    }
+
+    [PunRPC]
+    public void RPCPickupItem(Transform transform) // TODO TEST RPC CALL
+    {
+        m_pickupable.PickupItem(transform);
+        m_heldItem = m_pickupable;
     }
 }

@@ -73,11 +73,5 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
         //obj.control
     }
 
-    private Collider2D GetPickupCollider
-    {
-        get
-        {
-            return new List<Collider2D>(GetComponents<Collider2D>()).Find(x => x.isTrigger == false);
-        }
-    }
+    private Collider2D GetPickupCollider => new List<Collider2D>(GetComponents<Collider2D>()).Find(x => x.isTrigger == false);
 }
