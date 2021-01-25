@@ -39,6 +39,7 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - Refresh
+  - RPCPickupItem
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
