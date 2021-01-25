@@ -24,11 +24,10 @@ public class Bullet : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-
             transform.position += (new Vector3((int)m_currentDir, 0, 0) * m_bulletSpeed) * Time.deltaTime;
 
             m_hit = Physics2D.CircleCast(transform.position, m_bulletSize, Vector2.zero, 0, m_layers);
-            m_hitable = m_hit.transform?.GetComponent<IHitable>();
+            m_hitable = m_hit.transform.GetComponent<IHitable>();
 
             if (m_hitable != null)
             {

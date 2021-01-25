@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
     internal Action<InputAction.CallbackContext> OnPickup;
     internal Action<InputAction.CallbackContext> OnUseItemStarted;
     internal Action<InputAction.CallbackContext> OnUseItemEnded;
+    internal Action<InputAction.CallbackContext> OnItemThrow;
     internal Action<InputAction.CallbackContext> TempYeet;
 
     private void Awake()
@@ -24,6 +25,8 @@ public class InputManager : MonoBehaviour
         m_controls.Player.PickupItem.started += PickupItem;
         m_controls.Player.UseItem.started += UseHeldItemStart;
         m_controls.Player.UseItem.canceled += UseHeldItemEnd;
+        //TODO add to controls
+        //m_controls.Player.ThrowItem.performed += UseItemThrow;
 
         //m_controls.Player.Attack.performed += TempYeeting;
     }
@@ -37,6 +40,8 @@ public class InputManager : MonoBehaviour
     private void UseHeldItemStart(InputAction.CallbackContext obj) => OnUseItemStarted(obj);
 
     private void UseHeldItemEnd(InputAction.CallbackContext obj) => OnUseItemEnded(obj);
+
+    private void UseItemThrow(InputAction.CallbackContext obj) => OnItemThrow(obj);
 
     //private void TempYeeting(InputAction.CallbackContext obj) => TempYeet(obj);
 

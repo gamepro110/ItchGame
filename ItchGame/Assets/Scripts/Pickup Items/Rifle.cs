@@ -26,8 +26,8 @@ public class Rifle : PickupBase
         Init();
         useItemAction = UsingItem;
         pickupItem = RiflePickup;
-        m_setFireRate = m_fireRate;
         CustomThrowAction = OnItemThrow;
+        m_setFireRate = m_fireRate;
     }
 
     private void RiflePickup()
@@ -43,13 +43,17 @@ public class Rifle : PickupBase
             if (m_ammo > 0)
             {
                 Direction dir = m_movement.PlayerDir == PlayerDirection.left ? Direction.Left : Direction.Right;
+
                 GameObject go = PhotonNetwork.Instantiate(m_bullet.name, m_nuzzlePos.position, Quaternion.identity);
+
                 BulletBase bullet = go.GetComponent<BulletBase>();
                 bullet.SetDirection(dir);
                 bullet.SetDamage(m_damage);
                 bullet.SetSpeed(m_bulletSpeed);
                 bullet.SetOwner(m_movement.gameObject);
+
                 StartCoroutine(BulletCleanup(go));
+
                 m_ammo--;
                 m_fireRate = m_setFireRate;
             }
@@ -66,7 +70,7 @@ public class Rifle : PickupBase
 
     private void OnItemThrow()
     {
-        Debug.Log("yeet gun");
+        Debug.Log("yeet " + gameObject.name);
     }
 
     private IEnumerator BulletCleanup(GameObject go)
