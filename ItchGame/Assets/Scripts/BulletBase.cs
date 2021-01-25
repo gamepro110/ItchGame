@@ -21,7 +21,7 @@ public class BulletBase : MonoBehaviourPunCallbacks
     {
         m_rayhit = Physics2D.CircleCast(transform.position, 1, Vector2.up, 0, m_hitLayerMask);
 
-        m_hitable = m_rayhit.transform?.GetComponent<IHitable>();
+        m_hitable = m_rayhit.transform.GetComponent<IHitable>();
 
         if (m_hitable != null)
         {
@@ -51,8 +51,5 @@ public class BulletBase : MonoBehaviourPunCallbacks
         m_owner = go;
     }
 
-    internal Direction GetDir
-    {
-        get => m_dir;
-    }
+    internal Direction GetDir => m_dir;
 }
