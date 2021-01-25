@@ -1,11 +1,13 @@
 using UnityEngine;
+using Photon.Pun;
 using TMPro;
 
-public class PlayerDamagable : MonoBehaviour, IHitable
+public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable
 {
     [SerializeField] private float m_damage = 0;
     [SerializeField] private float m_dmgCap = 0;
     [SerializeField] private string m_deathText = string.Empty;
+
     public float TotalDamage { get => m_damage; }
 
     public TMP_Text txt;
@@ -13,20 +15,27 @@ public class PlayerDamagable : MonoBehaviour, IHitable
 
     private void Start()
     {
-        txt = FindObjectOfType<TMP_Text>();
-        m_RB = GetComponent<Rigidbody2D>();
+        if (photonView.IsMine)
+        {
+            txt = FindObjectOfType<TMP_Text>();
+            m_RB = GetComponent<Rigidbody2D>();
+        }
     }
 
     private void LateUpdate()
     {
-        txt.text = string.Format("{0:0.00; 0.00;ZERO;}%", m_damage);
-        if (m_damage > m_dmgCap)
+        if (photonView.IsMine)
         {
-            txt.text = m_deathText;
-            gameObject.SetActive(false);
+            txt.text = string.Format("{0:0.00; 0.00;ZERO;}%", m_damage);
+            if (m_damage > m_dmgCap)
+            {
+                txt.text = m_deathText;
+                gameObject.SetActive(false);
+            }
         }
     }
 
+    // TODO make RPC
     public void Hit(float dmg, GameObject owner = null, GameObject hitter = null)
     {
         if (gameObject != owner)
