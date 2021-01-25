@@ -8,7 +8,7 @@ public class PlayerPickup : PickupBase
 
     private Vector2 m_castSize = Vector2.zero;
     [SerializeField] private RaycastHit2D m_hit = default;
-    private IPickupAble m_pickupable = null;
+    [SerializeField] private IPickupAble m_pickupable = null;
     [SerializeField] private LayerMask m_layers = default;
     [SerializeField] private Transform m_pickupParent = null;
     [SerializeField] internal IPickupAble m_heldItem = null;
@@ -35,22 +35,25 @@ public class PlayerPickup : PickupBase
 
                 if (m_pickupable != null)
                 {
-                    photonView.RPC("RPCPickupItem", RpcTarget.All, m_pickupParent);
-                    //m_pickupable.PickupItem(m_pickupParent);
-                    //m_heldItem = m_pickupable;
+                    m_pickupable.PickupItem(m_pickupParent);
+                    m_heldItem = m_pickupable;
+
+                    photonView.RPC("RPCPickupItem", RpcTarget.Others);
                 }
             }
         }
         else
         {
-            m_input.OnItemThrow(obj);
+            //Debug.LogWarning("YEETT", this);
+            //m_input.OnItemThrow(obj);
         }
     }
 
     [PunRPC]
-    public void RPCPickupItem(Transform transform) // TODO TEST RPC CALL
+    public void RPCPickupItem(PhotonMessageInfo _info) // TODO TEST RPC CALL
     {
-        m_pickupable.PickupItem(transform);
-        m_heldItem = m_pickupable;
+        PlayerPickup _pickup = _info.photonView.GetComponent<PlayerPickup>();
+
+        _pickup.PickupItem(_pickup.m_pickupParent);
     }
 }

@@ -31,7 +31,7 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
         transform.SetParent(parent);
         m_pickup = parent.gameObject.GetComponentInParent<PlayerPickup>();
 
-        m_input = m_pickup.GetComponent<InputManager>();
+        m_input = FindObjectOfType<InputManager>();
         m_input.OnItemThrow = OnItemThrow;
 
         transform.localPosition = Vector3.zero;
