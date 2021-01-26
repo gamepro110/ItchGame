@@ -31,11 +31,11 @@ public class SpriteOpacityManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(m_color);
+            stream.SendNext(m_color.a);
         }
         else if (stream.IsReading)
         {
-            m_color = (Color)stream.ReceiveNext();
+            m_color.a = (float)stream.ReceiveNext();
         }
     }
 }
