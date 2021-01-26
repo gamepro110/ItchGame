@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
 
@@ -53,7 +53,7 @@ public class PlayerPickup : PickupBase
     public void RPCPickupItem(PhotonMessageInfo _info) // TODO TEST RPC CALL
     {
         PlayerPickup _pickup = _info.photonView.GetComponent<PlayerPickup>();
-
+        Debug.LogWarning(_pickup.gameObject.name);
         _pickup.PickupItem(_pickup.m_pickupParent);
     }
 }
