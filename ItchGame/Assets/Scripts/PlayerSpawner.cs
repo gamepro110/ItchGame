@@ -18,7 +18,8 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
                 break;
             }
 
-            PhotonNetwork.Instantiate(m_playerPrefabStr, new Vector3(0, i, 0), Quaternion.identity);
+            GameObject go = PhotonNetwork.Instantiate(m_playerPrefabStr, new Vector3(0, i, 0), Quaternion.identity);
+            go.name += PhotonNetwork.NickName;
         }
         else
         {
