@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
 
-public class PlayerPickup : PickupBase
+public class PlayerPickup : MonoBehaviourPunCallbacks
 {
     private InputManager m_input = null;
 
@@ -54,6 +54,6 @@ public class PlayerPickup : PickupBase
     {
         PlayerPickup _pickup = _info.photonView.GetComponent<PlayerPickup>();
         Debug.LogWarning(_pickup.gameObject.name);
-        _pickup.PickupItem(_pickup.m_pickupParent);
+        //_pickup.PickupItem(_pickup.m_pickupParent);
     }
 }
