@@ -38,7 +38,7 @@ public class PlayerPickup : MonoBehaviourPunCallbacks
                     m_pickupable.PickupItem(m_pickupParent);
                     m_heldItem = m_pickupable;
 
-                    photonView.RPC("RPCPickupItem", RpcTarget.Others);
+                    photonView.RPC("RPCPickupItem", RpcTarget.All);
                 }
             }
         }
@@ -54,6 +54,7 @@ public class PlayerPickup : MonoBehaviourPunCallbacks
     {
         PlayerPickup _pickup = _info.photonView.GetComponent<PlayerPickup>();
         Debug.LogWarning(_pickup.gameObject.name);
+        _pickup.m_heldItem.PickupItem(_pickup.m_pickupParent);
         //_pickup.PickupItem(_pickup.m_pickupParent);
     }
 }

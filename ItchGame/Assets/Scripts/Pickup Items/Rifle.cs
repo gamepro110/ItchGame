@@ -21,16 +21,13 @@ public class Rifle : PickupBase
 
     private void Start()
     {
-        if (photonView.IsMine)
-        {
-            m_ammo = Random.Range(m_minAmmo, m_maxAmmo);
+        m_ammo = Random.Range(m_minAmmo, m_maxAmmo);
 
-            Init();
-            useItemAction = UsingItem;
-            pickupItem = RiflePickup;
-            CustomThrowAction = OnItemThrow;
-            m_setFireRate = m_fireRate;
-        }
+        Init();
+        useItemAction = UsingItem;
+        pickupItem = RiflePickup;
+        CustomThrowAction = OnItemThrow;
+        m_setFireRate = m_fireRate;
     }
 
     private void RiflePickup()
