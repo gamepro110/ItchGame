@@ -10,6 +10,13 @@ public class LobbyParticipants : MonoBehaviourPunCallbacks
     private void Start()
     {
         m_text.text = string.Empty;
+        foreach (var item in PhotonNetwork.CurrentRoom.Players)
+        {
+            if (item.Value.NickName == string.Empty)
+            {
+                item.Value.NickName = $"GUEST_{Random.Range(0, int.MaxValue)}";
+            }
+        }
     }
 
     private void LateUpdate()
@@ -26,7 +33,7 @@ public class LobbyParticipants : MonoBehaviourPunCallbacks
         m_msg = $"{(PhotonNetwork.IsMasterClient ? "\tyou are the [HOST]" : string.Empty)}";
         foreach (var item in PhotonNetwork.CurrentRoom.Players)
         {
-            m_msg += string.Format("\t{0}\n", item.Value.NickName != string.Empty ? item.Value.NickName : "GUEST_" + System.Environment.UserName[0] + System.Environment.UserName[2]);
+            m_msg += string.Format("\t{0}\n", item.Value.NickName);
         }
         return m_msg;
     }
