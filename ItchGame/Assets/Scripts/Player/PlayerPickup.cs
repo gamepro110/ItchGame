@@ -13,12 +13,16 @@ public class PlayerPickup : MonoBehaviourPunCallbacks
     [SerializeField] private Transform m_pickupParent = null;
     [SerializeField] internal IPickupAble m_heldItem = null;
 
+    private PlayerSpawnBehaviour m_spawnBehaviour = null;
+
     private void Start()
     {
         if (photonView.IsMine)
         {
             m_input = FindObjectOfType<InputManager>();
             m_castSize = GetComponent<Collider2D>().bounds.size;
+
+            m_spawnBehaviour = GetComponent<PlayerSpawnBehaviour>();
 
             m_input.OnPickup += Pickup;
         }
@@ -38,7 +42,7 @@ public class PlayerPickup : MonoBehaviourPunCallbacks
                     m_pickupable.PickupItem(m_pickupParent);
                     m_heldItem = m_pickupable;
 
-                    photonView.RPC("RPCPickupItem", RpcTarget.All);
+                    photonView.RPC("RPCPickupItem", RpcTarget.All, photonView.ViewID);
                 }
             }
         }
@@ -50,10 +54,13 @@ public class PlayerPickup : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void RPCPickupItem(PhotonMessageInfo _info) // TODO TEST RPC CALL
+    public void RPCPickupItem(int id, PhotonMessageInfo _info) // TODO TEST RPC CALL
     {
-        PlayerPickup _pickup = _info.photonView.GetComponent<PlayerPickup>();
-        Debug.LogWarning(_pickup.gameObject.name);
+        // link sender id to player gameobjects
+        GameObject go = m_spawnBehaviour.GetPlayerDict[id];
+
+        PlayerPickup _pickup = go.GetComponent<PlayerPickup>();
+        Debug.LogWarning(go.name);
         _pickup.m_heldItem.PickupItem(_pickup.m_pickupParent);
         //_pickup.PickupItem(_pickup.m_pickupParent);
     }
