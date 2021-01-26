@@ -79,29 +79,16 @@ public class PlayerJump : MonoBehaviourPunCallbacks
         {
             case JumpState.grounded:
                 {
+                    m_jumpState = JumpState.jumped;
                     vel = Vector2.up * m_jumpForce;
                     break;
                 }
+
             case JumpState.jumped:
                 {
                     m_RB.velocity = new Vector2(m_RB.velocity.x, m_RB.velocity.y < 0 ? 0 : m_RB.velocity.y);
                     vel = Vector2.up * m_jumpForce * (m_jumpForceMultiplier);
-                    break;
-                }
-        }
-        m_RB.velocity += vel;
-
-        switch (m_jumpState)
-        {
-            case JumpState.grounded:
-                {
                     m_jumpState = JumpState.jumped;
-                    break;
-                }
-
-            case JumpState.jumped:
-                {
-                    m_jumpState = JumpState.doubleJumped;
                     break;
                 }
 
@@ -112,10 +99,17 @@ public class PlayerJump : MonoBehaviourPunCallbacks
 
             case JumpState.falling:
                 {
-                    m_jumpState = JumpState.jumped;
+                    if (m_jumpState != JumpState.doubleJumped)
+                    {
+                        m_RB.velocity = new Vector2(m_RB.velocity.x, m_RB.velocity.y < 0 ? 0 : m_RB.velocity.y);
+                        vel = Vector2.up * m_jumpForce * (m_jumpForceMultiplier);
+                        m_jumpState = JumpState.doubleJumped;
+                    }
                 }
                 break;
         }
+
+        m_RB.velocity += vel;
     }
 
     private void PlayerJumpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
