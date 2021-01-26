@@ -7,8 +7,11 @@ public class HealBlob : PickupBase
 
     private void Start()
     {
-        Init();
-        useItemAction = UsingItem;
+        if (photonView.IsMine)
+        {
+            Init();
+            useItemAction = UsingItem;
+        }
     }
 
     private void UsingItem(GameObject obj)
