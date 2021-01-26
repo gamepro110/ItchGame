@@ -240,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_hitLayerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2304
   m_explosionDMG: 0
   ExplosionDmgRange: 1.5
   explosioneffect: {fileID: 6038900115834729712}
