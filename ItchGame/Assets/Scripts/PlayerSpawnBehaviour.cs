@@ -6,7 +6,7 @@ using Photon.Realtime;
 
 public class PlayerSpawnBehaviour : MonoBehaviourPunCallbacks
 {
-    private Dictionary<int, GameObject> m_PlayerDict = new Dictionary<int, GameObject>();
+    [SerializeField] private Dictionary<int, GameObject> m_PlayerDict = new Dictionary<int, GameObject>();
 
     private PhotonView m_photonView = null;
 
@@ -21,17 +21,19 @@ public class PlayerSpawnBehaviour : MonoBehaviourPunCallbacks
         }
 
         m_photonView = GetComponent<PhotonView>();
+
+        photonView.RPC("RegisterToHost", RpcTarget.All, photonView.ViewID);
+
+        //m_PlayerDict.Add(photonView.ViewID, gameObject);
+        //List<GameObject> items = new List<GameObject>(m_PlayerDict.Values);
+        //items.ForEach(x => Debug.Log(">>>>> START " + x.name));
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    [PunRPC]
+    public void RegisterToHost(int id, PhotonMessageInfo info)
     {
-        base.OnPlayerEnteredRoom(newPlayer);
-        m_PlayerDict.Add(m_photonView.ViewID, gameObject);
-    }
-
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        base.OnPlayerLeftRoom(otherPlayer);
-        m_PlayerDict.Remove(m_photonView.ViewID);
+        //TODO test correctness of this...
+        GameObject go = new List<PhotonView>(FindObjectsOfType<PhotonView>()).Find(x => x.ViewID == id).gameObject;
+        m_PlayerDict.Add(id, go);
     }
 }

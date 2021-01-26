@@ -16,9 +16,9 @@ public class LobbyParticipants : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
 
-        if (PhotonNetwork.NickName != string.Empty)
+        if (PhotonNetwork.NickName == string.Empty)
         {
-            PhotonNetwork.NickName = $"GUEST_{Random.Range(0, int.MaxValue)}";
+            PhotonNetwork.NickName = $"GUEST_{Random.Range(0, 99)}";
         }
     }
 

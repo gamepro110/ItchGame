@@ -54,7 +54,7 @@ public class PlayerPickup : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void RPCPickupItem(int id, PhotonMessageInfo _info) // TODO TEST RPC CALL
+    public void RPCPickupItem(int id, PhotonMessageInfo info) // TODO TEST RPC CALL
     {
         // link sender id to player gameobjects
         GameObject go = m_spawnBehaviour.GetPlayerDict[id];
