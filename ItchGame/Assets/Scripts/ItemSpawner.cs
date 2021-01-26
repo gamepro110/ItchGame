@@ -8,9 +8,12 @@ public class ItemSpawner : MonoBehaviour
 
     private void Start()
     {
-        foreach (var item in items)
+        if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate("pickups/" + item.name, new Vector3(Random.Range(-8, 8), 6), Quaternion.identity);
+            foreach (var item in items)
+            {
+                PhotonNetwork.Instantiate("pickups/" + item.name, new Vector3(Random.Range(-8, 8), 6), Quaternion.identity);
+            }
         }
     }
 }
