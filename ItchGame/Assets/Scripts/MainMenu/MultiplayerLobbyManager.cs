@@ -43,7 +43,7 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            m_gameSceneIndex = 4;
+            m_gameSceneIndex = 3;
         }
         PhotonNetwork.LoadLevel(m_gameSceneIndex);
     }
