@@ -28,12 +28,6 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         {
             m_dir = PlayerDirection.left;
         }
-
-        // kill rigidbody on players that are not the local
-        if (!photonView.IsMine)
-        {
-            Destroy(GetComponent<Rigidbody2D>());
-        }
     }
 
     private void Update()

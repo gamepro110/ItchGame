@@ -23,6 +23,8 @@ public class PlayerJump : MonoBehaviourPunCallbacks
     [SerializeField] private bool m_isGrounded = false;
     [SerializeField] private float m_groundedRayLength = 1.0f;
 
+    private bool hasDJumped;
+
     internal JumpState GetJumpState { get => m_jumpState; }
 
     private void Start()
@@ -45,29 +47,12 @@ public class PlayerJump : MonoBehaviourPunCallbacks
             if (GroundCheck)
             {
                 m_jumpState = JumpState.grounded;
+                hasDJumped = false;
             }
             else
             {
                 m_jumpState = JumpState.falling;
             }
-        }
-
-        switch (m_jumpState)
-        {
-            case JumpState.grounded:
-                break;
-
-            case JumpState.jumped:
-                //transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
-                break;
-
-            case JumpState.doubleJumped:
-                //transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
-                break;
-
-            case JumpState.falling:
-                //transform.position += new Vector3(0, -4f, 0) * Time.deltaTime;
-                break;
         }
     }
 
@@ -79,29 +64,16 @@ public class PlayerJump : MonoBehaviourPunCallbacks
         {
             case JumpState.grounded:
                 {
+                    m_jumpState = JumpState.jumped;
                     vel = Vector2.up * m_jumpForce;
                     break;
                 }
+
             case JumpState.jumped:
                 {
                     m_RB.velocity = new Vector2(m_RB.velocity.x, m_RB.velocity.y < 0 ? 0 : m_RB.velocity.y);
                     vel = Vector2.up * m_jumpForce * (m_jumpForceMultiplier);
-                    break;
-                }
-        }
-        m_RB.velocity += vel;
-
-        switch (m_jumpState)
-        {
-            case JumpState.grounded:
-                {
                     m_jumpState = JumpState.jumped;
-                    break;
-                }
-
-            case JumpState.jumped:
-                {
-                    m_jumpState = JumpState.doubleJumped;
                     break;
                 }
 
@@ -112,10 +84,18 @@ public class PlayerJump : MonoBehaviourPunCallbacks
 
             case JumpState.falling:
                 {
-                    m_jumpState = JumpState.jumped;
+                    if (!hasDJumped)
+                    {
+                        m_RB.velocity = new Vector2(m_RB.velocity.x, m_RB.velocity.y < 0 ? 0 : m_RB.velocity.y);
+                        vel = Vector2.up * m_jumpForce * (m_jumpForceMultiplier);
+                        m_jumpState = JumpState.doubleJumped;
+                        hasDJumped = true;
+                    }
                 }
                 break;
         }
+
+        m_RB.velocity += vel;
     }
 
     private void PlayerJumpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -127,7 +107,15 @@ public class PlayerJump : MonoBehaviourPunCallbacks
         get
         {
             m_hit = Physics2D.Raycast(transform.position, Vector2.down, m_groundedRayLength, m_layers);
+            //m_hit = Physics2D.BoxCast(transform.position, new Vector2(m_groundedRayLength, m_groundedRayLength + 0.1f), 0, Vector2.down);
+            //if (m_hit.transform.GetComponent<PlayerJump>() != null)
+            //{
+            //    return false;
+            //}
+            //else
+            //{
             return m_hit.transform != null;
+            //}
         }
     }
 
@@ -135,5 +123,6 @@ public class PlayerJump : MonoBehaviourPunCallbacks
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, Vector3.down * m_groundedRayLength);
+        Gizmos.DrawWireCube(new Vector3(transform.position.x, transform.position.y - 0.3f, transform.position.z), new Vector2(m_groundedRayLength, m_groundedRayLength));
     }
 }
