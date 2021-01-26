@@ -79,9 +79,12 @@ public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable
 
     private void HPToVisibility()
     {
-        float op = (1 - (m_damage / m_dmgCap));
-        Debug.Log(op);
+        if (photonView.IsMine)
+        {
+            float op = (1 - (m_damage / m_dmgCap));
+            Debug.Log(op);
 
-        m_objSprite.UpdateOp(op);
+            m_objSprite.UpdateOp(op);
+        }
     }
 }
