@@ -77,7 +77,7 @@ public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable
 
     private void HPToVisibility()
     {
-        float op = (100 - (m_damage / m_dmgCap));
+        float op = (1 - (m_damage / m_dmgCap));
         Debug.Log(op);
 
         m_objSprite.UpdateOp(op);
