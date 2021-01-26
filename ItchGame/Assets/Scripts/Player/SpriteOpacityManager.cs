@@ -3,20 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class SpriteOpacityManager : MonoBehaviourPunCallbacks
+public class SpriteOpacityManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-    [SerializeField] private SpriteRenderer[] sprites;
+    [SerializeField] private Color m_color;
+    private List<SpriteRenderer> m_spriteRenderers;
+
+    private void Start()
+    {
+        m_spriteRenderers = new List<SpriteRenderer>(GetComponentsInChildren<SpriteRenderer>());
+        m_color = m_spriteRenderers[0].color;
+    }
 
     public void UpdateOp(float op)
     {
         if (photonView.IsMine)
         {
-            for (int i = 0; i < sprites.Length; i++)
-            {
-                Color tmp = sprites[i].color;
-                tmp.a = op;
-                sprites[i].color = tmp;
-            }
+            m_color.a = op;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        m_spriteRenderers.ForEach(x => x.color = m_color);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(m_color);
+        }
+        else if (stream.IsReading)
+        {
+            m_color = (Color)stream.ReceiveNext();
         }
     }
 }

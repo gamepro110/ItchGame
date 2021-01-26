@@ -10,12 +10,15 @@ public class LobbyParticipants : MonoBehaviourPunCallbacks
     private void Start()
     {
         m_text.text = string.Empty;
-        foreach (var item in PhotonNetwork.CurrentRoom.Players)
+    }
+
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+
+        if (PhotonNetwork.NickName != string.Empty)
         {
-            if (item.Value.NickName == string.Empty)
-            {
-                item.Value.NickName = $"GUEST_{Random.Range(0, int.MaxValue)}";
-            }
+            PhotonNetwork.NickName = $"GUEST_{Random.Range(0, int.MaxValue)}";
         }
     }
 
