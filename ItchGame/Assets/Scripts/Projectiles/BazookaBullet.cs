@@ -27,6 +27,7 @@ public class BazookaBullet : BulletBase
 
         if (HitCheck())
         {
+            //TODO add RPC for dealing dmg
             m_hitable?.Hit(m_damage, m_owner, gameObject);
 
             BazookaBoom();
@@ -37,12 +38,11 @@ public class BazookaBullet : BulletBase
         }
     }
 
-    void BazookaBoom()
+    private void BazookaBoom()
     {
         PhotonNetwork.Instantiate(explosioneffect.name, transform.position, Quaternion.identity);
 
         colls = new List<Collider2D>(Physics2D.OverlapCircleAll(transform.position, ExplosionDmgRange, m_hitLayerMask));
-
 
         foreach (var item in colls)
         {

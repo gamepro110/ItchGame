@@ -23,10 +23,10 @@ public class LobbyParticipants : MonoBehaviourPunCallbacks
     // TODO fix bug
     private string GetParticipants()
     {
-        m_msg = $"{(PhotonNetwork.IsMasterClient ? "\tyou are th [HOST]" : string.Empty)}";
+        m_msg = $"{(PhotonNetwork.IsMasterClient ? "\tyou are the [HOST]" : string.Empty)}";
         foreach (var item in PhotonNetwork.CurrentRoom.Players)
         {
-            m_msg += string.Format("\t{0}\n", item.Value.NickName);
+            m_msg += string.Format("\t{0}\n", item.Value.NickName != string.Empty ? item.Value.NickName : "GUEST_" + System.Environment.UserName[0] + System.Environment.UserName[2]);
         }
         return m_msg;
     }

@@ -10,7 +10,7 @@ public class TestTrap : MonoBehaviour
     private void Update()
     {
         m_hit = Physics2D.CircleCast(transform.position, 1, Vector2.zero, 0, m_layers);
-        m_hitable = m_hit.transform?.GetComponent<IHitable>();
+        m_hitable = m_hit.transform.GetComponent<IHitable>();
         m_hitable?.Hit(m_dmg, gameObject, gameObject);
     }
 }

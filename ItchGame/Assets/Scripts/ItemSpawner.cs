@@ -10,7 +10,7 @@ public class ItemSpawner : MonoBehaviour
     {
         foreach (var item in items)
         {
-            PhotonNetwork.Instantiate(item.name, new Vector3(Random.Range(-8, 8), 6), Quaternion.identity);
+            PhotonNetwork.Instantiate("pickups/" + item.name, new Vector3(Random.Range(-8, 8), 6), Quaternion.identity);
         }
     }
 }
