@@ -6,9 +6,8 @@ using Photon.Realtime;
 
 public class PlayerSpawnBehaviour : MonoBehaviourPunCallbacks
 {
-    private Dictionary<int, GameObject> m_PlayerDict = new Dictionary<int, GameObject>();
-
-    private PhotonView m_photonView = null;
+    [SerializeField] private Dictionary<int, GameObject> m_PlayerDict = new Dictionary<int, GameObject>();
+    [SerializeField] private List<GameObject> test = new List<GameObject>();
 
     internal IReadOnlyDictionary<int, GameObject> GetPlayerDict => m_PlayerDict;
 
@@ -20,18 +19,33 @@ public class PlayerSpawnBehaviour : MonoBehaviourPunCallbacks
             Destroy(GetComponent<Rigidbody2D>());
         }
 
-        m_photonView = GetComponent<PhotonView>();
+        photonView.RPC("RegisterPlayer", RpcTarget.All);
+
+        //m_PlayerDict.Add(photonView.ViewID, gameObject);
+        //List<GameObject> items = new List<GameObject>(m_PlayerDict.Values);
+        //items.ForEach(x => Debug.Log(">>>>> START " + x.name));
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    private void LateUpdate()
     {
-        base.OnPlayerEnteredRoom(newPlayer);
-        m_PlayerDict.Add(m_photonView.ViewID, gameObject);
+        test = new List<GameObject>(m_PlayerDict.Values);
     }
 
-    public override void OnPlayerLeftRoom(Player otherPlayer)
+    [PunRPC]
+    public void RegisterPlayer(PhotonMessageInfo info)
     {
-        base.OnPlayerLeftRoom(otherPlayer);
-        m_PlayerDict.Remove(m_photonView.ViewID);
+        if (!m_PlayerDict.ContainsKey(info.photonView.ViewID))
+        {
+            //TODO test correctness of this...
+            GameObject go = new List<PhotonView>(FindObjectsOfType<PhotonView>()).Find(x => x.ViewID == info.photonView.ViewID).gameObject;
+            m_PlayerDict.Add(info.photonView.ViewID, go);
+        }
+        else
+        {
+            string thing = string.Empty;
+            test.ForEach(x => thing += $"name :\t{x.name}\n");
+
+            //Debug.Log($"recieved id: {info.photonView.ViewID}, existing: {thing}", this);
+        }
     }
 }

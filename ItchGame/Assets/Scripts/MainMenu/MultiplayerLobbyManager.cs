@@ -88,6 +88,7 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
+        PhotonNetwork.AutomaticallySyncScene = false;
         SceneManager.LoadScene(0);
     }
 }

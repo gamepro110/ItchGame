@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
+using System.Collections.Generic;
 
 public class PlayerPickup : MonoBehaviourPunCallbacks
 {
@@ -39,29 +40,36 @@ public class PlayerPickup : MonoBehaviourPunCallbacks
 
                 if (m_pickupable != null)
                 {
-                    m_pickupable.PickupItem(m_pickupParent);
-                    m_heldItem = m_pickupable;
+                    //m_pickupable.PickupItem(m_pickupParent);
+                    //m_heldItem = m_pickupable;
+                    PhotonView view = m_hit.transform.GetComponent<PickupBase>().photonView;
 
-                    photonView.RPC("RPCPickupItem", RpcTarget.All, photonView.ViewID);
+                    photonView.RPC("RPCPickupItem", RpcTarget.All, view.ViewID);
                 }
             }
         }
         else
         {
-            //Debug.LogWarning("YEETT", this);
-            //m_input.OnItemThrow(obj);
+            Debug.LogWarning("YEETT", this);
+            m_input.OnItemThrow(obj);
         }
     }
 
     [PunRPC]
-    public void RPCPickupItem(int id, PhotonMessageInfo _info) // TODO TEST RPC CALL
+    public void RPCPickupItem(int id, PhotonMessageInfo info) // TODO TEST RPC CALL
     {
         // link sender id to player gameobjects
-        GameObject go = m_spawnBehaviour.GetPlayerDict[id];
-
-        PlayerPickup _pickup = go.GetComponent<PlayerPickup>();
-        Debug.LogWarning(go.name);
-        _pickup.m_heldItem.PickupItem(_pickup.m_pickupParent);
+        //GameObject go = m_spawnBehaviour.GetPlayerDict[info.photonView.ViewID];
+        //PlayerPickup _pickup = go.GetComponent<PlayerPickup>();
+        //_pickup.m_heldItem.PickupItem(_pickup.m_pickupParent);
         //_pickup.PickupItem(_pickup.m_pickupParent);
+
+        GameObject _pickup = new List<PhotonView>(FindObjectsOfType<PhotonView>()).Find(x => x.ViewID == id).gameObject;
+
+        m_pickupable = _pickup.GetComponent<IPickupAble>();
+
+        m_pickupable.PickupItem(m_pickupParent);
+        m_heldItem = _pickup.GetComponent<IPickupAble>();
+        // TODO rebuild and test
     }
 }
