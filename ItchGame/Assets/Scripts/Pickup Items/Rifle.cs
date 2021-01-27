@@ -76,6 +76,10 @@ public class Rifle : PickupBase
     private IEnumerator BulletCleanup(GameObject go)
     {
         yield return new WaitForSeconds(m_bulletLifetime);
-        PhotonNetwork.Destroy(go);
+
+        if (go != null)
+        {
+            PhotonNetwork.Destroy(go);
+        }
     }
 }
