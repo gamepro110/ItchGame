@@ -17,6 +17,7 @@ public class RifleBullet : BulletBase
         if (HitCheck())
         {
             m_hitable?.Hit(m_damage, m_owner, gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }
