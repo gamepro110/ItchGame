@@ -16,6 +16,6 @@ public class HealBlob : PickupBase
         obj.GetComponent<PlayerDamagable>().Heal(m_healAmount);
         m_pickup.m_heldItem = null;
         transform.SetParent(null);
-        PhotonNetwork.Destroy(gameObject);
+        NetworkDestroy();
     }
 }

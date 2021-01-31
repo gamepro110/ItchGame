@@ -45,14 +45,7 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
 
     public void UseItem(GameObject obj)
     {
-        if (useItemAction == null)
-        {
-            Debug.LogWarning("UseItem not set...");
-        }
-        else
-        {
-            useItemAction(obj);
-        }
+        useItemAction?.Invoke(obj);
     }
 
     public void ThrowItem(Vector2 dir, bool enableCollider = false)
@@ -74,6 +67,18 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
 
     private void OnItemThrow(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+    }
+
+    internal void NetworkDestroy()
+    {
+        photonView.RPC("RecievePickupNetworkDestroy", RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    public void RecievePickupNetworkDestroy()
+    {
+        Debug.LogWarning(gameObject.name);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     //private Collider2D GetPickupCollider => new List<Collider2D>(GetComponents<Collider2D>()).Find(x => x.isTrigger == false);
