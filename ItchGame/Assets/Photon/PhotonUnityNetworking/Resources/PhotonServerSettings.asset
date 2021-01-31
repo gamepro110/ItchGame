@@ -41,6 +41,7 @@ MonoBehaviour:
   - Refresh
   - RPCPickupItem
   - RegisterPlayer
+  - RPCThrowItem
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

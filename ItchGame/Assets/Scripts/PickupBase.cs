@@ -6,7 +6,7 @@ using System.Collections.Generic;
 // TODO make player action to throw weapon away
 public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
 {
-    private Rigidbody2D m_RB = null;
+    protected Rigidbody2D m_RB = null;
     private Collider2D m_collider = null;
 
     private InputManager m_input = null;
@@ -15,6 +15,7 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
     protected Action<GameObject> useItemAction = null;
     protected Action pickupItem = null;
     protected Action CustomThrowAction = null;
+    protected PlayerMovement m_movement = null;
 
     protected void Init()
     {
@@ -35,6 +36,9 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
         m_input.OnItemThrow = OnItemThrow;
 
         transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+
+        m_movement = transform.GetComponentInParent<PlayerMovement>();
 
         pickupItem?.Invoke();
     }
@@ -70,7 +74,6 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
 
     private void OnItemThrow(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        //obj.control
     }
 
     //private Collider2D GetPickupCollider => new List<Collider2D>(GetComponents<Collider2D>()).Find(x => x.isTrigger == false);
