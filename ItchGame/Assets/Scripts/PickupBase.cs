@@ -6,7 +6,7 @@ using System.Collections.Generic;
 // TODO make player action to throw weapon away
 public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
 {
-    private Rigidbody2D m_RB = null;
+    protected Rigidbody2D m_RB = null;
     private Collider2D m_collider = null;
 
     private InputManager m_input = null;
@@ -15,6 +15,7 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
     protected Action<GameObject> useItemAction = null;
     protected Action pickupItem = null;
     protected Action CustomThrowAction = null;
+    protected PlayerMovement m_movement = null;
 
     protected void Init()
     {
@@ -35,20 +36,16 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
         m_input.OnItemThrow = OnItemThrow;
 
         transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+
+        m_movement = transform.GetComponentInParent<PlayerMovement>();
 
         pickupItem?.Invoke();
     }
 
     public void UseItem(GameObject obj)
     {
-        if (useItemAction == null)
-        {
-            Debug.LogWarning("UseItem not set...");
-        }
-        else
-        {
-            useItemAction(obj);
-        }
+        useItemAction?.Invoke(obj);
     }
 
     public void ThrowItem(Vector2 dir, bool enableCollider = false)
@@ -70,7 +67,18 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
 
     private void OnItemThrow(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        //obj.control
+    }
+
+    internal void NetworkDestroy()
+    {
+        photonView.RPC("RecievePickupNetworkDestroy", RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    public void RecievePickupNetworkDestroy()
+    {
+        Debug.LogWarning(gameObject.name);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     //private Collider2D GetPickupCollider => new List<Collider2D>(GetComponents<Collider2D>()).Find(x => x.isTrigger == false);

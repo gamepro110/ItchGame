@@ -284,8 +284,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7874084658987321352}
   - component: {fileID: 7874084658987321353}
-  - component: {fileID: 7265009235311945793}
   - component: {fileID: 7874084658987321354}
+  - component: {fileID: 7265009235311945793}
   - component: {fileID: 7874084658987321365}
   - component: {fileID: 7874084658987321358}
   - component: {fileID: 7874084658987321359}
@@ -335,6 +335,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!70 &7874084658987321354
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7874084658987321356}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.04}
+  m_Size: {x: 2, y: 0.88}
+  m_Direction: 1
 --- !u!60 &7265009235311945793
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -376,22 +392,6 @@ PolygonCollider2D:
       - {x: 0.81663054, y: -0.006028034}
       - {x: 0.81120986, y: 0.042379096}
       - {x: 0.7133506, y: 0.05193031}
---- !u!70 &7874084658987321354
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7874084658987321356}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.04}
-  m_Size: {x: 2, y: 0.88}
-  m_Direction: 1
 --- !u!114 &7874084658987321365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,7 +413,6 @@ MonoBehaviour:
   m_minAmmo: 10
   m_maxAmmo: 15
   m_fireRate: 0.5
-  m_gunThrowForce: 10
 --- !u!114 &7874084658987321358
 MonoBehaviour:
   m_ObjectHideFlags: 0

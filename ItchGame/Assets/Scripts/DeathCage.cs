@@ -9,7 +9,7 @@ public class DeathCage : MonoBehaviour
         m_hitable = collision.gameObject.GetComponent<IHitable>();
         if (m_hitable != null)
         {
-            collision.gameObject.GetComponent<PlayerDamagable>()?.Hit(500);
+            collision.gameObject.GetComponent<PlayerDamagable>()?.Hit(200);
             collision.gameObject.SetActive(false);
             return;
         }
@@ -20,7 +20,8 @@ public class DeathCage : MonoBehaviour
         {
             try
             {
-                PhotonNetwork.Destroy(collision.gameObject);
+                PickupBase pickup = collision.gameObject.GetComponent<PickupBase>();
+                pickup.NetworkDestroy();
             }
             catch (System.Exception)
             {
