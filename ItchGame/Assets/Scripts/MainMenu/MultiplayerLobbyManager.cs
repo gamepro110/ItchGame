@@ -71,7 +71,10 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
-            StartMultiB.interactable = true;
+            if (PhotonNetwork.IsMasterClient) // TODO Relocate
+            {
+                StartMultiB.interactable = true;
+            }
         }
     }
 
