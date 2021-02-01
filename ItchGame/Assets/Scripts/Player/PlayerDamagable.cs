@@ -38,6 +38,8 @@ public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable, IPunObservab
                 gameObject.SetActive(false);
             }
         }
+
+        HPToVisibility();
     }
 
     // TODO make RPC

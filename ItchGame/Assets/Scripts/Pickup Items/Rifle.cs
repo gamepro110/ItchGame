@@ -7,7 +7,7 @@ public class Rifle : PickupBase
 {
     [SerializeField] private GameObject m_bullet = null;
     [SerializeField] private Transform m_nuzzlePos = null;
-    [SerializeField, Range(1, 50)] private float m_damage = 0;
+    [SerializeField, Range(1, 100)] private float m_damage = 0;
     [SerializeField, Range(1, 20)] private float m_bulletSpeed = 0;
     [SerializeField, Range(1, 10)] private int m_bulletLifetime = 0;
 
