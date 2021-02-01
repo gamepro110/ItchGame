@@ -4,33 +4,39 @@ using UnityEngine;
 
 public class WinCondition : MonoBehaviour
 {
-    private List<PlayerDamagable> m_players = null;
+    private static List<PlayerDamagable> m_players = null;
     private int m_livingPlayers = 0;
-
-    private void Start()
-    {
-        StartCoroutine(Find());
-    }
 
     private void LateUpdate()
     {
         m_livingPlayers = 0;
-        m_players.ForEach(check);
+        m_players.ForEach(Check);
 
         if (m_livingPlayers < 2)
         {
-            Debug.Log(">>>>>>>>> REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+            Debug.Log(">>>>>>>>> REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
         }
     }
 
-    private void check(PlayerDamagable x)
+    private void Check(PlayerDamagable x)
     {
-        if (x.gameObject.activeSelf) m_livingPlayers++;
+        if (x != null)
+        {
+            if (x.gameObject.activeSelf) m_livingPlayers++;
+        }
+        else
+        {
+            m_players.Remove(x);
+        }
     }
 
-    private IEnumerator Find()
+    internal static void RegisterPlayer(PlayerDamagable x)
     {
-        yield return new WaitForSeconds(2);
-        m_players = new List<PlayerDamagable>(FindObjectsOfType<PlayerDamagable>());
+        m_players.Add(x);
+    }
+
+    internal static void RemovePlayer(PlayerDamagable x)
+    {
+        m_players.Remove(x);
     }
 }
