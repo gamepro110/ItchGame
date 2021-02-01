@@ -33,7 +33,8 @@ public class SpriteOpacityManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             stream.SendNext(m_color.a);
         }
-        else if (stream.IsReading)
+
+        if (stream.IsReading)
         {
             m_color.a = (float)stream.ReceiveNext();
         }

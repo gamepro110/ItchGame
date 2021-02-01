@@ -16,6 +16,18 @@ public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable, IPunObservab
 
     [SerializeField] private SpriteOpacityManager m_objSprite;
 
+    public override sealed void OnEnable()
+    {
+        base.OnEnable();
+        WinCondition.RegisterPlayer(this);
+    }
+
+    public override sealed void OnDisable()
+    {
+        base.OnDisable();
+        WinCondition.RemovePlayer(this);
+    }
+
     private void Start()
     {
         if (photonView.IsMine)

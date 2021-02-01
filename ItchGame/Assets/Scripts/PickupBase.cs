@@ -71,13 +71,13 @@ public class PickupBase : MonoBehaviourPunCallbacks, IPickupAble
 
     internal void NetworkDestroy()
     {
+        m_pickup.m_heldItem = null;
         photonView.RPC("RecievePickupNetworkDestroy", RpcTarget.MasterClient);
     }
 
     [PunRPC]
     public void RecievePickupNetworkDestroy()
     {
-        Debug.LogWarning(gameObject.name);
         PhotonNetwork.Destroy(gameObject);
     }
 
