@@ -14,16 +14,12 @@ public class PlayerPickup : MonoBehaviourPunCallbacks
     [SerializeField] private Transform m_pickupParent = null;
     [SerializeField] internal IPickupAble m_heldItem = null;
 
-    private PlayerSpawnBehaviour m_spawnBehaviour = null;
-
     private void Start()
     {
         if (photonView.IsMine)
         {
             m_input = FindObjectOfType<InputManager>();
             m_castSize = GetComponent<Collider2D>().bounds.size;
-
-            m_spawnBehaviour = GetComponent<PlayerSpawnBehaviour>();
 
             m_input.OnPickup += Pickup;
         }
@@ -50,26 +46,28 @@ public class PlayerPickup : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.LogWarning("YEETT", this);
-            m_input.OnItemThrow(obj);
+            int id = m_pickupParent.GetChild(0).GetComponent<PhotonView>().ViewID;
+            photonView.RPC("RPCThrowItem", RpcTarget.All, id);
         }
     }
 
     [PunRPC]
-    public void RPCPickupItem(int id, PhotonMessageInfo info) // TODO TEST RPC CALL
+    public void RPCPickupItem(int id, PhotonMessageInfo info)
     {
-        // link sender id to player gameobjects
-        //GameObject go = m_spawnBehaviour.GetPlayerDict[info.photonView.ViewID];
-        //PlayerPickup _pickup = go.GetComponent<PlayerPickup>();
-        //_pickup.m_heldItem.PickupItem(_pickup.m_pickupParent);
-        //_pickup.PickupItem(_pickup.m_pickupParent);
-
         GameObject _pickup = new List<PhotonView>(FindObjectsOfType<PhotonView>()).Find(x => x.ViewID == id).gameObject;
 
         m_pickupable = _pickup.GetComponent<IPickupAble>();
-
         m_pickupable.PickupItem(m_pickupParent);
         m_heldItem = _pickup.GetComponent<IPickupAble>();
-        // TODO rebuild and test
+    }
+
+    [PunRPC]
+    public void RPCThrowItem(int id, PhotonMessageInfo info)
+    {
+        GameObject _pickup = new List<PhotonView>(FindObjectsOfType<PhotonView>()).Find(x => x.ViewID == id).gameObject;
+
+        m_pickupable = _pickup.GetComponent<IPickupAble>();
+        m_pickupable.ThrowItem(Vector2.up, true);
+        m_heldItem = null;
     }
 }

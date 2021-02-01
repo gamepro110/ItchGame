@@ -1,8 +1,9 @@
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using System.Collections.Generic;
 
-public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable
+public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable, IPunObservable
 {
     [SerializeField] private float m_damage = 0;
     [SerializeField] private float m_dmgCap = 0;
@@ -44,7 +45,9 @@ public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable
     {
         if (gameObject != owner)
         {
-            m_damage += dmg;
+            //m_damage += dmg;
+
+            photonView.RPC("RPCRecieveDmg", RpcTarget.All, dmg);
 
             //start dmg flashing...
 
@@ -85,6 +88,25 @@ public class PlayerDamagable : MonoBehaviourPunCallbacks, IHitable
             Debug.Log(op);
 
             m_objSprite.UpdateOp(op);
+        }
+    }
+
+    [PunRPC]
+    public void RPCRecieveDmg(float dmg)
+    {
+        m_damage += dmg;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(m_damage);
+        }
+
+        if (stream.IsReading)
+        {
+            m_damage = (float)stream.ReceiveNext();
         }
     }
 }

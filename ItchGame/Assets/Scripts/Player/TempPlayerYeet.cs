@@ -27,7 +27,7 @@ public class TempPlayerYeet : MonoBehaviourPunCallbacks
         Direction dir = m_movement.PlayerDir == PlayerDirection.left ? Direction.Left : Direction.Right;
         m_bulletSpawnDir = new Vector3((float)dir, 0);
         GameObject go = PhotonNetwork.Instantiate(m_ball.name, transform.position + m_bulletSpawnDir, Quaternion.identity);
-        go.GetComponent<Bullet>().SetDirection(dir);
+        go.GetComponent<BulletBase>().SetDirection(dir);
         StartCoroutine(BulletCleanup(go));
     }
 

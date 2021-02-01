@@ -68,7 +68,10 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
 
-        StartMultiB.interactable = true;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartMultiB.interactable = true;
+        }
     }
 
     //temp
@@ -78,7 +81,10 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
-            StartMultiB.interactable = true;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartMultiB.interactable = true;
+            }
         }
     }
 

@@ -416,7 +416,6 @@ MonoBehaviour:
   m_minAmmo: 1
   m_maxAmmo: 3
   m_fireRate: 2
-  m_gunThrowForce: 20
 --- !u!114 &7874084658987321358
 MonoBehaviour:
   m_ObjectHideFlags: 0

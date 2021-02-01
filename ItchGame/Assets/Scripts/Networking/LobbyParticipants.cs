@@ -33,7 +33,7 @@ public class LobbyParticipants : MonoBehaviourPunCallbacks
     // TODO fix bug
     private string GetParticipants()
     {
-        m_msg = $"{(PhotonNetwork.IsMasterClient ? "\tyou are the [HOST]" : string.Empty)}";
+        m_msg = $"{(PhotonNetwork.IsMasterClient ? "\tyou are the [HOST]\n" : string.Empty)}";
         foreach (var item in PhotonNetwork.CurrentRoom.Players)
         {
             m_msg += string.Format("\t{0}\n", item.Value.NickName);
