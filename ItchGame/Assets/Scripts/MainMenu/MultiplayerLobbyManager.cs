@@ -27,7 +27,14 @@ public class MultiplayerLobbyManager : MonoBehaviourPunCallbacks
 
     private void GoToMainMenu()
     {
-        PhotonNetwork.Disconnect();
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.Disconnect();
+        }
+        else
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     private void GoConnect()
